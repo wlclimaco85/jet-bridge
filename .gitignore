@@ -1,7 +1,0 @@
-*.pyc
-*.DS_Store
-*.egg*
-
-/.idea
-/packages/*/dist/
-/packages/*/build/
