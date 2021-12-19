@@ -24,5 +24,24 @@ class StatusMaquinasAdmin(admin.ModelAdmin):
 
 @admin.register(OrderEnvio)
 class OrderEnvioAdmin(admin.ModelAdmin):
-    list_display = ("simbolo", "valor", "status", "data", "tipo", "created", "updated")
-    prepopulated_fields = {"simbolo": ("data",)}
+    list_display = ('id','simbolo','valor','data','tipo', 'periodo', 'created','updated')
+
+@admin.register(OrdemStatus)
+class OrdemStatusAdmin(admin.ModelAdmin):
+    list_display = ('id','corretora_id','ordem_id','status', 'created','updated')
+
+@admin.register(Corretora)
+class CorretoraAdmin(admin.ModelAdmin):
+    list_display = ('id','nome','usuario','senha','aplicativo','ambiente','saldo','created','updated','server','empresa','moeda','saldo','capitalLig')
+
+@admin.register(RequicaoEst)
+class RequicaoEstAdmin(admin.ModelAdmin):
+    list_display = ('id','estr_id','ordem_id','created','updated')
+
+@admin.register(Estrategias)
+class EstrategiasAdmin(admin.ModelAdmin):
+    list_display = ('id','nome','descricao','status','created','updated')
+
+@admin.register(OrderCompraVenda)
+class OrderCompraVendaAdmin(admin.ModelAdmin):
+    list_display = ('id','ticket','ordem_id','simbolo','ambiente','nomeRobo','preco_compra','preco_venda','preco_loss','preco_gain','qtdContratos','data_compra','data_venda','status','tipo','created','updated')

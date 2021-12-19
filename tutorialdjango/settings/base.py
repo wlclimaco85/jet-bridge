@@ -80,6 +80,20 @@ WSGI_APPLICATION = "tutorialdjango.wsgi.application"
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
+
+#client = pymongo.MongoClient("mongodb://wlclimaco:<password>@<hostname>/myFirstDatabase?ssl=true&replicaSet=atlas-jremot-shard-0&authSource=admin&retryWrites=true&w=majority")
+#db = client.test
+
+#DATABASES = {
+      #  'default': {
+     #   'ENGINE': 'djongo',
+     #   'NAME': 'ROBO001',
+     #   'HOST': 'mongodb://wlclimaco:<N6j7y7a5>@<hostname>/ROBO001?ssl=true&replicaSet=atlas-jremot-shard-0&authSource=admin&retryWrites=true&w=majority',
+      #  'USER': 'wlclimaco',
+      #  'PASSWORD': 'N6j7y7a5',
+   # }
+#}
+
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.sqlite3",

@@ -24,4 +24,29 @@ class XmlsSerializer(serializers.ModelSerializer):
 class OrderEnvioSerializer(serializers.ModelSerializer):
     class Meta:
         model = OrderEnvio
-        fields = ['id','simbolo','valor','status','data','tipo','created','updated']
+        fields = ['id','simbolo','valor','data','tipo','periodo','created','updated']
+
+class CorretoraSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Corretora
+        fields = ['id','nome','usuario','senha','aplicativo','ambiente','saldo','created','updated','server','empresa','moeda','saldo','capitalLig']
+
+class EstrategiasSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Estrategias
+        fields = ['id','nome','descricao','status','created','updated']
+
+class RequicaoEstSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = RequicaoEst
+        fields = ['id','estr_id','ordem_id','created','updated']
+
+class OrdemStatusSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = OrdemStatus
+        fields = ['id','corretora_id','ordem_id','status', 'created','updated']
+
+class OrderCompraVendaSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = OrderCompraVenda
+        fields = ['id','ticket','ordem_id','simbolo','ambiente','nomeRobo','preco_compra','preco_venda','preco_loss','preco_gain','qtdContratos','data_compra','data_venda','status','tipo','created','updated']
