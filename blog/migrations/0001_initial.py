@@ -74,6 +74,26 @@ class Migration(migrations.Migration):
                 ('author', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
             ],
         ),
+
+        migrations.CreateModel(
+            name='Corretora',
+            fields=[
+                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),           
+                ('nome', models.CharField(max_length=100)),
+                ('usuario', models.IntegerField(blank=True, null=True )),
+                ('senha', models.CharField(max_length=100, blank=True, null=True)),
+                ('aplicativo', models.CharField(max_length=50, blank=True, null=True)),
+                ('server', models.CharField(max_length=50, blank=True, null=True)),
+                ('empresa', models.CharField(max_length=50, blank=True, null=True)),
+                ('ambiente', models.CharField(max_length=1, blank=True, null=True)),
+                ('moeda', models.CharField(max_length=10, blank=True, null=True)),
+                ('saldo', models.FloatField(blank=True, null=True)),
+                ('capitalLig', models.FloatField(blank=True, null=True)),
+                ('created', models.DateTimeField(auto_now_add=True)),
+                ('updated', models.DateTimeField(auto_now=True)),
+            ],
+        ),
+        
         migrations.CreateModel(
             name='OrderCompraVenda',
             fields=[
@@ -98,24 +118,7 @@ class Migration(migrations.Migration):
                 ('author', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
             ],
         ),
-        migrations.CreateModel(
-            name='Corretora',
-            fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),           
-                ('nome', models.CharField(max_length=100)),
-                ('usuario', models.IntegerField(blank=True, null=True )),
-                ('senha', models.CharField(max_length=100, blank=True, null=True)),
-                ('aplicativo', models.CharField(max_length=50, blank=True, null=True)),
-                ('server', models.CharField(max_length=50, blank=True, null=True)),
-                ('empresa', models.CharField(max_length=50, blank=True, null=True)),
-                ('ambiente', models.CharField(max_length=1, blank=True, null=True)),
-                ('moeda', models.CharField(max_length=10, blank=True, null=True)),
-                ('saldo', models.FloatField(blank=True, null=True)),
-                ('capitalLig', models.FloatField(blank=True, null=True)),
-                ('created', models.DateTimeField(auto_now_add=True)),
-                ('updated', models.DateTimeField(auto_now=True)),
-            ],
-        ),
+        
         migrations.CreateModel(
             name='OrdemStatus',
             fields=[
