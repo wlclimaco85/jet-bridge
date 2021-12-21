@@ -14,6 +14,7 @@ from rest_framework import status
 from django.http import HttpResponse
 from django.http import Http404
 from datetime import datetime, timedelta
+from django.db import connection
 
 class ParceiroFilter(filters.FilterSet):
     class Meta:
@@ -29,7 +30,7 @@ class OrdensFilter(filters.FilterSet):
         #    'data':['gte', 'lte', 'exact', 'gt', 'lt']
         #})
         fields = {
-            'data': ['exact']
+            'id': ['lt']
         }
 
 class CorretoraFilter(filters.FilterSet):
@@ -140,18 +141,26 @@ class XmlsDetailView(DetailView):
 
 class OrderEnvioViewSet(viewsets.ModelViewSet):
     futuredate = datetime.now()
-    queryset = OrderEnvio.objects.all().filter(data__gte=futuredate)
+    start_date =  datetime(futuredate.year, futuredate.month, futuredate.day, 9, 00, 32, 11)
+    end_date = datetime(futuredate.year, futuredate.month, futuredate.day, 19, 00, 32, 11)
+    queryset = OrderEnvio.objects.filter(data__range=(start_date, end_date))
+    #queryset = OrderEnvio.objects.raw('SELECT id,name,pages FROM app_books WHERE pages=')# OrderEnvio.objects.filter(data__range=(start_date, end_date))
+   # queryset = OrderEnvio.objects.all()#.filter(data__gte=futuredate)
     serializer_class = OrderEnvioSerializer
-  #  filterset_class = OrdensFilter
+    filterset_class = OrdensFilter
     
    # queryset.filter(data_at__gte=futuredate)
     
 
     @action(methods=['get'], detail=False)
 
+    def my_custom_sql(self, request):
+        return OrderEnvio.objects.raw('SELECT id,name,pages FROM app_books WHERE pages='+request.id)
+
+
 
     def newest(self, request):
-        newest = self.get_queryset().order_by('created').last()
+        newest = self.get_queryset().order_by('data').last()
         serializer = self.get_serializer_class()(newest)
         return Response(serializer.data)
 
@@ -195,6 +204,10 @@ class CorretoraViewSet(viewsets.ModelViewSet):
         return self.update(request, *args, **kwargs)
 
 class OrdemStatusViewSet(viewsets.ModelViewSet):
+   # futuredate = datetime.now()
+   # start_date =  datetime(futuredate.year, futuredate.month, futuredate.day, 9, 00, 32, 11)
+   #end_date = datetime.now()
+   # queryset = OrdemStatus.objects.filter(data__range=(start_date, end_date))
     queryset = OrdemStatus.objects.all()
     serializer_class = OrdemStatusSerializer
     filterset_class = OrdemStatusFilter
