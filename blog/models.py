@@ -157,12 +157,37 @@ class OrderCompraVenda(models.Model):
 class CustonResponse001(models.Model):
     corretora_id = models.IntegerField(db_column=False)
     ordem_id = models.IntegerField(db_column=False)
+    tipo = models.CharField(max_length=1,db_column=False)
     status = models.CharField(max_length=1,db_column=False)
-    corretora = models.CharField(max_length=100, db_column=False)
+    simbolo = models.CharField(max_length=12,db_column=False)
+    corretora = models.CharField(max_length=100,db_column=False)
+    preco_compra  = models.FloatField(blank=True, null=True, db_column=False)
+    preco_venda = models.FloatField(max_length=1,db_column=False)
+    data_compra  = models.DateTimeField(blank=True, null=True, db_column=False)
+    data_venda = models.DateTimeField(auto_now_add=True, db_column=False)
+    created = models.DateTimeField(auto_now_add=True, db_column=False)
+    ticket = models.IntegerField(db_column=False)
+    preco_loss = models.FloatField(blank=True, null=True, db_column=False)
+    preco_gain = models.FloatField(blank=True, null=True, db_column=False)
     class meta:
         ordering = ("-ordem_id",)
     def __str__(self):
         return self.id
+
+class CustonResponse002(models.Model):
+    id = models.IntegerField(primary_key=True, db_column=False)
+    simbolo = models.CharField(blank=True, null=True, max_length=10,db_column=False)
+    valor = models.FloatField(blank=True, null=True, db_column=False)
+    periodo = models.IntegerField(blank=True, null=True, db_column=False)
+    data = models.DateTimeField(blank=True, null=True, db_column=False)
+    tipo = models.CharField(blank=True, null=True, max_length=1,db_column=False)
+    created = models.DateTimeField(blank=True, null=True, db_column=False)
+    updated = models.DateTimeField(blank=True, null=True, db_column=False)
+    nome = models.CharField(blank=True, null=True, max_length=100,db_column=False)
+    class meta:
+        ordering = ("-created",)
+    def __str__(self):
+        return self.simbolo
 
 
     

@@ -38,7 +38,7 @@ class CorretoraFilter(filters.FilterSet):
         model = Corretora
         
         fields = (
-            'usuario','created'
+            'usuario','id'
         )  
 #
 class OrdemStatusFilter(filters.FilterSet):
@@ -347,7 +347,9 @@ class CustonResponse001ViewSet(viewsets.ModelViewSet):
         from collections import namedtuple
         cc = connection.cursor()
        # try:
-        quert = "SELECT R.corretora_id_id as corretora_id, R.ordem_id_id as ordem_id ,R.STATUS as status, gg.nome as corretora FROM Blog_ordercompravenda R LEFT JOIN BLOG_ORDERENVIO O ON (R.ordem_id_id = O.ID) LEFT JOIN BLOG_REQUICAOEST E ON (R.ordem_id_id = E.ordem_id_id) LEFT JOIN BLOG_ESTRATEGIAS Gg ON (E.estr_id_id = Gg.id)     WHERE GG.NOME IS NOT NULL "
+        quert = "SELECT R.CORRETORA_ID_ID as corretora_id, R.ordem_id_id as ordem_id ,R.TIPO,R.STATUS,R.SIMBOLO, GG.NOME as corretora, R.PRECO_COMPRA,R.PRECO_VENDA, R.DATA_COMPRA, DATA_VENDA,R.CREATED, R.STATUS,R.TICKET,R.TIPO,  R.PRECO_LOSS, R.PRECO_GAIN , gg.nome as corretora "
+        quert = quert + "FROM Blog_ordercompravenda R LEFT JOIN BLOG_ORDERENVIO O ON (R.ordem_id_id = O.ID) LEFT JOIN BLOG_REQUICAOEST E ON (R.ordem_id_id = E.ordem_id_id) "
+        quert = quert + "LEFT JOIN BLOG_ESTRATEGIAS Gg ON (E.estr_id_id = Gg.id)     WHERE GG.NOME IS NOT NULL "
         if(id):
             quert = quert + "and r.id = "+id
         if(latitude):
@@ -420,7 +422,171 @@ class CustonResponse001ViewSet(viewsets.ModelViewSet):
         finally:
             c.close()
         newest = row #OrderCompraVenda.objects.raw("SELECT R.id, R.corretora_id_id, R.ordem_id_id ,R.STATUS, gg.nome FROM Blog_ordercompravenda R LEFT JOIN BLOG_ORDERENVIO O ON (R.ordem_id_id = O.ID) LEFT JOIN BLOG_REQUICAOEST E ON (R.ordem_id_id = E.ordem_id_id) LEFT JOIN BLOG_ESTRATEGIAS Gg ON (E.estr_id_id = Gg.id)     WHERE GG.NOME IS NOT NULL  order by r.data_compra" ).order_by('corretora_id_id').last()
-        CustonResponse001.columns['id','corretora_id', 'ordem_id', 'status','corretora']
+        #CustonResponse001.columns['id','corretora_id', 'ordem_id', 'status','corretora']
         #newest = self.get_queryset().order_by('corretora_id_id').last()
         serializer = self.get_serializer_class()(newest)
         return Response(serializer.data)
+
+class CustonResponse002ViewSet(viewsets.ModelViewSet):
+
+    def dictfetchall(cursor):
+        "Return all rows from a cursor as a dict"
+        columns = [col[0] for col in cursor.description]
+        return [
+            dict(zip(columns, row))
+            for row in cursor.fetchall()
+        ]
+    
+    
+    from collections import namedtuple
+    c = connection.cursor()
+    try:
+        c.execute("SELECT R.corretora_id_id as corretora_id, R.ordem_id_id as ordem_id ,R.STATUS as status, gg.nome as corretora FROM Blog_ordercompravenda R LEFT JOIN BLOG_ORDERENVIO O ON (R.ordem_id_id = O.ID) LEFT JOIN BLOG_REQUICAOEST E ON (R.ordem_id_id = E.ordem_id_id) LEFT JOIN BLOG_ESTRATEGIAS Gg ON (E.estr_id_id = Gg.id)     WHERE GG.NOME IS NOT NULL and r.id = 618 order by r.data_compra")
+        row = dictfetchall(c)
+    finally:
+        c.close()
+    
+    queryset = row
+    serializer_class = CustonResponse002Serializer
+    def dictfetchall3(cursor):
+        "Return all rows from a cursor as a dict"
+        columns = [col[0] for col in cursor.description]
+        return [
+            dict(zip(columns, row))
+            for row in cursor.fetchall()
+        ]
+
+    def get_queryset(self):
+        from collections import namedtuple
+       # cc = connection.cursor()
+        
+        corretora_id = self.request.query_params.get('corretora_id')
+        dataInicio = self.request.query_params.get('dataInicio')
+        dataFim = self.request.query_params.get('dataFim')
+        status = self.request.query_params.get('status')
+        estrategia = self.request.query_params.get('estrategia')
+        orderId = self.request.query_params.get('orderId')
+        requsicaoId = self.request.query_params.get('requsicaoId')
+        from collections import namedtuple
+        cc = connection.cursor()
+       # try:
+        quert = "SELECT O.ID, O.SIMBOLO,O.VALOR,O.DATA,O.TIPO,O.CREATED,O.UPDATED,O.PERIODO,GG.NOME FROM BLOG_ORDERENVIO O  "
+        quert = quert + "LEFT JOIN BLOG_REQUICAOEST E ON (O.ID = E.ordem_id_id) "
+        quert = quert + "LEFT JOIN BLOG_ESTRATEGIAS Gg ON (E.estr_id_id = Gg.id)"
+        quert = quert + "WHERE not exists (select * from blog_ORDEMSTATUS r where r.ordem_id_id = O.ID "
+        if(corretora_id):
+            quert = quert + "AND R.CORRETORA_ID_ID = "+corretora_id+")"
+        else:
+            quert = quert + ")"
+        quert = quert + " order by o.CREATED desc"
+        cc.execute(quert)
+        "Return all rows from a cursor as a dict"
+        columns = [col[0] for col in cc.description]
+        aa = [
+            dict(zip(columns, row))
+            for row in cc.fetchall()
+        ]
+        queryset = aa
+      #  finally:
+        cc.close()
+       # queryset = row #Model.objects.filter(location__distance_lte=(location, D(m=distance))).distance(location).order_by('distance')
+
+        return queryset
+
+    def dictfetchall4(cursor):
+        "Return all rows from a cursor as a dict"
+        columns = [col[0] for col in cursor.description]
+        return [
+            dict(zip(columns, row))
+            for row in cursor.fetchall()
+        ]
+    
+    def dictfetchall(cursor):
+        "Return all rows from a cursor as a dict"
+        columns = [col[0] for col in cursor.description]
+        return [
+            dict(zip(columns, row))
+            for row in cursor.fetchall()
+        ]
+
+class CustonResponse003ViewSet(viewsets.ModelViewSet):
+    
+    def dictfetchall(cursor):
+        "Return all rows from a cursor as a dict"
+        columns = [col[0] for col in cursor.description]
+        return [
+            dict(zip(columns, row))
+            for row in cursor.fetchall()
+        ]
+    
+    
+    from collections import namedtuple
+    c = connection.cursor()
+    try:
+        c.execute("SELECT R.corretora_id_id as corretora_id, R.ordem_id_id as ordem_id ,R.STATUS as status, gg.nome as corretora FROM Blog_ordercompravenda R LEFT JOIN BLOG_ORDERENVIO O ON (R.ordem_id_id = O.ID) LEFT JOIN BLOG_REQUICAOEST E ON (R.ordem_id_id = E.ordem_id_id) LEFT JOIN BLOG_ESTRATEGIAS Gg ON (E.estr_id_id = Gg.id)     WHERE GG.NOME IS NOT NULL and r.id = 618 order by r.data_compra")
+        row = dictfetchall(c)
+    finally:
+        c.close()
+    
+    queryset = row
+    serializer_class = CustonResponse002Serializer
+    def dictfetchall3(cursor):
+        "Return all rows from a cursor as a dict"
+        columns = [col[0] for col in cursor.description]
+        return [
+            dict(zip(columns, row))
+            for row in cursor.fetchall()
+        ]
+
+    def get_queryset(self):
+        from collections import namedtuple
+       # cc = connection.cursor()
+        
+        corretora_id = self.request.query_params.get('corretora_id')
+        dataInicio = self.request.query_params.get('dataInicio')
+        dataFim = self.request.query_params.get('dataFim')
+        status = self.request.query_params.get('status')
+        estrategia = self.request.query_params.get('estrategia')
+        orderId = self.request.query_params.get('orderId')
+        requsicaoId = self.request.query_params.get('requsicaoId')
+        from collections import namedtuple
+        cc = connection.cursor()
+       # try:
+        quert = "SELECT O.ID, O.SIMBOLO,O.VALOR,O.DATA,O.TIPO,O.CREATED,O.UPDATED,O.PERIODO,GG.NOME FROM BLOG_ORDERENVIO O  "
+        quert = quert + "LEFT JOIN BLOG_REQUICAOEST E ON (O.ID = E.ordem_id_id) "
+        quert = quert + "LEFT JOIN BLOG_ESTRATEGIAS Gg ON (E.estr_id_id = Gg.id)"
+        quert = quert + "WHERE exists (select * from blog_ORDEMSTATUS r where r.ordem_id_id = O.ID "
+        if(corretora_id):
+            quert = quert + "AND R.CORRETORA_ID_ID = "+corretora_id+")"
+        else:
+            quert = quert + ")"
+        quert = quert + " order by o.CREATED desc"
+        cc.execute(quert)
+        "Return all rows from a cursor as a dict"
+        columns = [col[0] for col in cc.description]
+        aa = [
+            dict(zip(columns, row))
+            for row in cc.fetchall()
+        ]
+        queryset = aa
+      #  finally:
+        cc.close()
+       # queryset = row #Model.objects.filter(location__distance_lte=(location, D(m=distance))).distance(location).order_by('distance')
+
+        return queryset
+
+    def dictfetchall4(cursor):
+        "Return all rows from a cursor as a dict"
+        columns = [col[0] for col in cursor.description]
+        return [
+            dict(zip(columns, row))
+            for row in cursor.fetchall()
+        ]
+    
+    def dictfetchall(cursor):
+        "Return all rows from a cursor as a dict"
+        columns = [col[0] for col in cursor.description]
+        return [
+            dict(zip(columns, row))
+            for row in cursor.fetchall()
+        ]
