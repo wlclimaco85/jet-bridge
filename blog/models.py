@@ -130,6 +130,7 @@ class OrdemStatus(models.Model):
 class OrderCompraVenda(models.Model):
     ticket = models.IntegerField(blank=True, null=True)
     ordem_id = models.ForeignKey(OrderEnvio, on_delete=models.CASCADE, blank=True, null=True)
+    corretora_id = models.ForeignKey(Corretora, on_delete=models.CASCADE, blank=True, null=True)
     simbolo = models.CharField(max_length=255, blank=True, null=True)
     ambiente = models.CharField(max_length=1, blank=True, null=True)
     nomeRobo = models.CharField(max_length=20, blank=True, null=True)
@@ -142,7 +143,8 @@ class OrderCompraVenda(models.Model):
     data_venda = models.DateTimeField(blank=True, null=True)
     status = models.CharField(max_length=1, blank=True, null=True)
     perfil = models.CharField(max_length=1, blank=True, null=True)
-    tipo = models.CharField(max_length=1, blank=True, null=True)
+    tipo = models.CharField(max_length=1, blank=True, null=True )
+    corretora = models.CharField(max_length=100, blank=True, null=True)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
 
@@ -150,6 +152,17 @@ class OrderCompraVenda(models.Model):
         ordering = ("-created",)
     def __str__(self):
         return self.simbolo
+
+
+class CustonResponse001(models.Model):
+    corretora_id = models.IntegerField(db_column=False)
+    ordem_id = models.IntegerField(db_column=False)
+    status = models.CharField(max_length=1,db_column=False)
+    corretora = models.CharField(max_length=100, db_column=False)
+    class meta:
+        ordering = ("-ordem_id",)
+    def __str__(self):
+        return self.id
 
 
     

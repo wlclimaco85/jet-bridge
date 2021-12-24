@@ -37,6 +37,8 @@ router.register(r'requicaoEst', RequicaoEstViewSet )
 router.register(r'orderCompraVenda', OrderCompraVendaViewSet )
 router.register(r'orderEnvio', OrderEnvioViewSet )
 router.register(r'OrdemStatus', OrdemStatusViewSet )
+#router.register(r'CustonResponse', CustonResponse001ViewSet )
+router.register(r'CustonResponse', CustonResponse001ViewSet, basename='CustonResponse001')
 
 urlpatterns = [
     path('admin/', admin.site.urls),
