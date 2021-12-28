@@ -634,13 +634,110 @@ class CustonResponse004ViewSet(viewsets.ModelViewSet):
         from collections import namedtuple
         cc = connection.cursor()
        # try:
+        futuredate = datetime.now()
+        start_date =  datetime(futuredate.year, futuredate.month, futuredate.day, 0, 32, 11)
         quert = "SELECT O.ID, O.SIMBOLO,O.VALOR,O.DATA,O.TIPO,O.CREATED,O.UPDATED,O.PERIODO FROM BLOG_ORDERENVIO O  "
         quert = quert + "WHERE not exists (select * from blog_ORDEMSTATUS r where r.ordem_id_id = O.ID "
         if(corretora_id):
             quert = quert + "AND R.CORRETORA_ID_ID = "+corretora_id+")"
         else:
             quert = quert + ")"
-        quert = quert + " order by O.id DESC"
+        quert = quert +  " AND o.data > '2021-12-28 0:38:40' order by O.id DESC"
+        cc.execute(quert)
+        "Return all rows from a cursor as a dict"
+        columns = [col[0] for col in cc.description]
+        aa = [
+            dict(zip(columns, row))
+            for row in cc.fetchall()
+        ]
+        queryset = aa
+      #  finally:
+        cc.close()
+       # queryset = row #Model.objects.filter(location__distance_lte=(location, D(m=distance))).distance(location).order_by('distance')
+
+        return queryset
+
+    def dictfetchall4(cursor):
+        "Return all rows from a cursor as a dict"
+        columns = [col[0] for col in cursor.description]
+        return [
+            dict(zip(columns, row))
+            for row in cursor.fetchall()
+        ]
+    
+    def dictfetchall(cursor):
+        "Return all rows from a cursor as a dict"
+        columns = [col[0] for col in cursor.description]
+        return [
+            dict(zip(columns, row))
+            for row in cursor.fetchall()
+        ]
+
+
+class CustonResponse005ViewSet(viewsets.ModelViewSet):
+    
+    def dictfetchall(cursor):
+        "Return all rows from a cursor as a dict"
+        columns = [col[0] for col in cursor.description]
+        return [
+            dict(zip(columns, row))
+            for row in cursor.fetchall()
+        ]
+    
+    
+    from collections import namedtuple
+    c = connection.cursor()
+    try:
+        c.execute("SELECT R.corretora_id_id as corretora_id, R.ordem_id_id as ordem_id ,R.STATUS as status FROM Blog_ordercompravenda R LEFT JOIN BLOG_ORDERENVIO O ON (R.ordem_id_id = O.ID) LEFT JOIN BLOG_REQUICAOEST E ON (R.ordem_id_id = E.ordem_id_id) LEFT JOIN BLOG_ESTRATEGIAS Gg ON (E.estr_id_id = Gg.id)     WHERE GG.NOME IS NOT NULL and r.id = 618 order by r.data_compra")
+        row = dictfetchall(c)
+    finally:
+        c.close()
+    
+    queryset = row
+    serializer_class = CustonResponse005Serializer
+    def dictfetchall3(cursor):
+        "Return all rows from a cursor as a dict"
+        columns = [col[0] for col in cursor.description]
+        return [
+            dict(zip(columns, row))
+            for row in cursor.fetchall()
+        ]
+
+    def get_queryset(self):
+        from collections import namedtuple
+       # cc = connection.cursor()
+        
+        corretora_id = self.request.query_params.get('corretora_id')
+        dataInicio = self.request.query_params.get('dataInicio')
+        dataFim = self.request.query_params.get('dataFim')
+        status = self.request.query_params.get('status')
+        estrategia = self.request.query_params.get('estrategia')
+        orderId = self.request.query_params.get('orderId')
+        requsicaoId = self.request.query_params.get('requsicaoId')
+        from collections import namedtuple
+        cc = connection.cursor()
+       # try:
+        futuredate = datetime.now()
+        start_date =  datetime(futuredate.year, futuredate.month, futuredate.day, 0, 32, 11)
+        quert = "SELECT C.ID as id ,C.USUARIO as usuario," 
+        quert = quert +  "	(SELECT COUNT(O.*) FROM BLOG_ORDERENVIO O  "  
+        quert = quert +  "		WHERE NOT EXISTS (SELECT * FROM BLOG_ORDEMSTATUS R WHERE R.ORDEM_ID_ID = O.ID AND R.CORRETORA_ID_ID = C.ID ) " 
+        quert = quert +  "		AND O.DATA > "+start_date+") as ordem_abertas_hoje, " 
+        quert = quert +  "	(SELECT COUNT(O.*) FROM BLOG_ORDERENVIO O  "  
+        quert = quert +  "		WHERE NOT EXISTS (SELECT * FROM BLOG_ORDEMSTATUS R WHERE R.ORDEM_ID_ID = O.ID AND R.CORRETORA_ID_ID = C.ID )) as ordem_abertas_total, " 
+        quert = quert +  "	(SELECT COUNT(*) FROM BLOG_ORDERCOMPRAVENDA O WHERE O.STATUS = 'A' AND O.CORRETORA_ID_ID = C.ID ) as order_state_started , " 
+        quert = quert +  "	(SELECT COUNT(*) FROM BLOG_ORDERCOMPRAVENDA O WHERE O.STATUS = 'B' AND O.CORRETORA_ID_ID = C.ID ) as order_state_placed , " 
+        quert = quert +  "	(SELECT COUNT(*) FROM BLOG_ORDERCOMPRAVENDA O WHERE O.STATUS = 'C' AND O.CORRETORA_ID_ID = C.ID ) as order_state_canceled , " 
+        quert = quert +  "	(SELECT COUNT(*) FROM BLOG_ORDERCOMPRAVENDA O WHERE O.STATUS = 'D' AND O.CORRETORA_ID_ID = C.ID ) as order_state_partial , " 
+        quert = quert +  "	(SELECT COUNT(*) FROM BLOG_ORDERCOMPRAVENDA O WHERE O.STATUS = 'E' AND O.CORRETORA_ID_ID = C.ID ) as order_state_filled , " 
+        quert = quert +  "	(SELECT COUNT(*) FROM BLOG_ORDERCOMPRAVENDA O WHERE O.STATUS = 'F' AND O.CORRETORA_ID_ID = C.ID ) as order_state_rejected , " 
+        quert = quert +  "	(SELECT COUNT(*) FROM BLOG_ORDERCOMPRAVENDA O WHERE O.STATUS = 'G' AND O.CORRETORA_ID_ID = C.ID ) as order_state_expired , " 
+        quert = quert +  "	(SELECT COUNT(*) FROM BLOG_ORDERCOMPRAVENDA O WHERE O.STATUS = 'H' AND O.CORRETORA_ID_ID = C.ID ) as order_state_request_add , " 
+        quert = quert +  "	(SELECT COUNT(*) FROM BLOG_ORDERCOMPRAVENDA O WHERE O.STATUS = 'I' AND O.CORRETORA_ID_ID = C.ID ) as order_state_request_modify, " 
+        quert = quert +  "	(SELECT COUNT(*) FROM BLOG_ORDERCOMPRAVENDA O WHERE O.STATUS = 'J' AND O.CORRETORA_ID_ID = C.ID ) as order_state_request_cancel , " 
+        quert = quert +  "	(SELECT COUNT(*) FROM BLOG_ORDERCOMPRAVENDA O WHERE O.STATUS = 'Z' AND O.CORRETORA_ID_ID = C.ID ) as ordem_erro  " 
+        quert = quert +  "FROM BLOG_CORRETORA C  " 
+        quert = quert +  "ORDER BY ID DESC " 
         cc.execute(quert)
         "Return all rows from a cursor as a dict"
         columns = [col[0] for col in cc.description]

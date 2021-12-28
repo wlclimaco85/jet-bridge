@@ -203,6 +203,27 @@ class CustonResponse004(models.Model):
     def __str__(self):
         return self.simbolo
 
+class CustonResponse005(models.Model):
+    id = models.IntegerField(primary_key=True, db_column=False)
+    usuario = models.IntegerField(blank=True, null=True, db_column=False)
+    ordem_abertas_hoje = models.IntegerField(blank=True, null=True, db_column=False)
+    ordem_abertas_total = models.IntegerField(blank=True, null=True, db_column=False)
+    order_state_started = models.IntegerField(blank=True, null=True, db_column=False)
+    order_state_placed = models.IntegerField(blank=True, null=True, db_column=False)
+    order_state_canceled = models.IntegerField(blank=True, null=True, db_column=False)
+    order_state_partial = models.IntegerField(blank=True, null=True, db_column=False)
+    order_state_filled = models.IntegerField(blank=True, null=True, db_column=False)
+    order_state_rejected = models.IntegerField(blank=True, null=True, db_column=False)
+    order_state_expired = models.IntegerField(blank=True, null=True, db_column=False)
+    order_state_request_add = models.IntegerField(blank=True, null=True, db_column=False)
+    order_state_request_modify = models.IntegerField(blank=True, null=True, db_column=False)
+    order_state_request_cancel = models.IntegerField(blank=True, null=True, db_column=False)
+    ordem_erro = models.IntegerField(blank=True, null=True, db_column=False)
+    class meta:
+        ordering = ("-ordem_erro",)
+    def __str__(self):
+        return self.ordem_erro
+
 
     
 
