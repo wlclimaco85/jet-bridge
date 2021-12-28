@@ -360,7 +360,7 @@ class CustonResponse001ViewSet(viewsets.ModelViewSet):
         if(radius):
             quert = quert + "and gg.nome = '"+estrategia+"'"
 
-        quert = quert + " order by r.data_compra"
+        quert = quert + " order by r.ordem_id_id, r.id DESC"
         cc.execute(quert)
         "Return all rows from a cursor as a dict"
         columns = [col[0] for col in cc.description]
@@ -478,7 +478,7 @@ class CustonResponse002ViewSet(viewsets.ModelViewSet):
             quert = quert + "AND R.CORRETORA_ID_ID = "+corretora_id+")"
         else:
             quert = quert + ")"
-        quert = quert + " order by o.CREATED desc"
+        quert = quert + " order by O.id DESC"
         cc.execute(quert)
         "Return all rows from a cursor as a dict"
         columns = [col[0] for col in cc.description]
@@ -560,7 +560,7 @@ class CustonResponse003ViewSet(viewsets.ModelViewSet):
             quert = quert + "AND R.CORRETORA_ID_ID = "+corretora_id+")"
         else:
             quert = quert + ")"
-        quert = quert + " order by o.CREATED desc"
+        quert = quert + " order by O.id DESC"
         cc.execute(quert)
         "Return all rows from a cursor as a dict"
         columns = [col[0] for col in cc.description]
@@ -590,3 +590,84 @@ class CustonResponse003ViewSet(viewsets.ModelViewSet):
             dict(zip(columns, row))
             for row in cursor.fetchall()
         ]
+
+class CustonResponse004ViewSet(viewsets.ModelViewSet):
+    
+    def dictfetchall(cursor):
+        "Return all rows from a cursor as a dict"
+        columns = [col[0] for col in cursor.description]
+        return [
+            dict(zip(columns, row))
+            for row in cursor.fetchall()
+        ]
+    
+    
+    from collections import namedtuple
+    c = connection.cursor()
+    try:
+        c.execute("SELECT R.corretora_id_id as corretora_id, R.ordem_id_id as ordem_id ,R.STATUS as status FROM Blog_ordercompravenda R LEFT JOIN BLOG_ORDERENVIO O ON (R.ordem_id_id = O.ID) LEFT JOIN BLOG_REQUICAOEST E ON (R.ordem_id_id = E.ordem_id_id) LEFT JOIN BLOG_ESTRATEGIAS Gg ON (E.estr_id_id = Gg.id)     WHERE GG.NOME IS NOT NULL and r.id = 618 order by r.data_compra")
+        row = dictfetchall(c)
+    finally:
+        c.close()
+    
+    queryset = row
+    serializer_class = CustonResponse004Serializer
+    def dictfetchall3(cursor):
+        "Return all rows from a cursor as a dict"
+        columns = [col[0] for col in cursor.description]
+        return [
+            dict(zip(columns, row))
+            for row in cursor.fetchall()
+        ]
+
+    def get_queryset(self):
+        from collections import namedtuple
+       # cc = connection.cursor()
+        
+        corretora_id = self.request.query_params.get('corretora_id')
+        dataInicio = self.request.query_params.get('dataInicio')
+        dataFim = self.request.query_params.get('dataFim')
+        status = self.request.query_params.get('status')
+        estrategia = self.request.query_params.get('estrategia')
+        orderId = self.request.query_params.get('orderId')
+        requsicaoId = self.request.query_params.get('requsicaoId')
+        from collections import namedtuple
+        cc = connection.cursor()
+       # try:
+        quert = "SELECT O.ID, O.SIMBOLO,O.VALOR,O.DATA,O.TIPO,O.CREATED,O.UPDATED,O.PERIODO FROM BLOG_ORDERENVIO O  "
+        quert = quert + "WHERE not exists (select * from blog_ORDEMSTATUS r where r.ordem_id_id = O.ID "
+        if(corretora_id):
+            quert = quert + "AND R.CORRETORA_ID_ID = "+corretora_id+")"
+        else:
+            quert = quert + ")"
+        quert = quert + " order by O.id DESC"
+        cc.execute(quert)
+        "Return all rows from a cursor as a dict"
+        columns = [col[0] for col in cc.description]
+        aa = [
+            dict(zip(columns, row))
+            for row in cc.fetchall()
+        ]
+        queryset = aa
+      #  finally:
+        cc.close()
+       # queryset = row #Model.objects.filter(location__distance_lte=(location, D(m=distance))).distance(location).order_by('distance')
+
+        return queryset
+
+    def dictfetchall4(cursor):
+        "Return all rows from a cursor as a dict"
+        columns = [col[0] for col in cursor.description]
+        return [
+            dict(zip(columns, row))
+            for row in cursor.fetchall()
+        ]
+    
+    def dictfetchall(cursor):
+        "Return all rows from a cursor as a dict"
+        columns = [col[0] for col in cursor.description]
+        return [
+            dict(zip(columns, row))
+            for row in cursor.fetchall()
+        ]
+

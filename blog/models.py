@@ -64,13 +64,13 @@ class Corretora(models.Model):
     nome = models.CharField(max_length=100)
     usuario = models.IntegerField(blank=True, null=True )
     senha = models.CharField(max_length=100, blank=True, null=True)
-    aplicativo = models.CharField(max_length=50, blank=True, null=True)
-    server = models.CharField(max_length=50, blank=True, null=True)
-    empresa = models.CharField(max_length=50, blank=True, null=True)
-    ambiente = models.CharField(max_length=1, blank=True, null=True)
-    moeda = models.CharField(max_length=10, blank=True, null=True)
-    saldo = models.FloatField(blank=True, null=True)
-    capitalLig = models.FloatField(blank=True, null=True)
+    aplicativo = models.CharField(max_length=50, blank=True, null=True, default='MetaTrader')
+    server = models.CharField(max_length=50, blank=True, null=True, default='')
+    empresa = models.CharField(max_length=50, blank=True, null=True, default='')
+    ambiente = models.CharField(max_length=1, blank=True, null=True, default='D')
+    moeda = models.CharField(max_length=10, blank=True, null=True, default='BRL')
+    saldo = models.FloatField(blank=True, null=True, default=0)
+    capitalLig = models.FloatField(blank=True, null=True, default=0)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
 
@@ -81,10 +81,10 @@ class Corretora(models.Model):
 
 class OrderEnvio(models.Model):
     simbolo = models.CharField(max_length=255, blank=True, null=True)
-    valor = models.FloatField(blank=True, null=True)
-    periodo = models.IntegerField(blank=True, null=True)
+    valor = models.FloatField(blank=True, null=True, default=0)
+    periodo = models.IntegerField(blank=True, null=True, default=0)
     data = models.DateTimeField(auto_now_add=True, blank=True, null=True)
-    tipo = models.CharField(max_length=1, blank=True, null=True)
+    tipo = models.CharField(max_length=1, blank=True, null=True, default='X')
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
 
@@ -95,7 +95,7 @@ class OrderEnvio(models.Model):
 
 class Estrategias(models.Model):
     nome = models.CharField(max_length=100, blank=True, null=True)
-    descricao = models.CharField(max_length=255, blank=True, null=True)
+    descricao = models.CharField(max_length=255, blank=True, null=True, default='')
     status = models.CharField(max_length=1, blank=True, null=True)
     created = models.DateTimeField(auto_now_add=True, blank=True, null=True)
     updated = models.DateTimeField(auto_now=True, blank=True, null=True)
@@ -121,7 +121,7 @@ class OrdemStatus(models.Model):
     ordem_id = models.ForeignKey(OrderEnvio, on_delete=models.CASCADE)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
-    status = models.CharField(max_length=1, blank=True, null=True)
+    status = models.CharField(max_length=1, blank=True, null=True, default='')
     class meta:
         ordering = ("-created",)
     def __str__(self):
@@ -131,20 +131,19 @@ class OrderCompraVenda(models.Model):
     ticket = models.IntegerField(blank=True, null=True)
     ordem_id = models.ForeignKey(OrderEnvio, on_delete=models.CASCADE, blank=True, null=True)
     corretora_id = models.ForeignKey(Corretora, on_delete=models.CASCADE, blank=True, null=True)
-    simbolo = models.CharField(max_length=255, blank=True, null=True)
-    ambiente = models.CharField(max_length=1, blank=True, null=True)
-    nomeRobo = models.CharField(max_length=20, blank=True, null=True)
-    preco_compra = models.FloatField(blank=True, null=True)
-    preco_venda = models.FloatField(blank=True, null=True)
-    preco_loss = models.FloatField(blank=True, null=True)
-    preco_gain = models.FloatField(blank=True, null=True)
-    qtdContratos = models.IntegerField(blank=True, null=True)
+    simbolo = models.CharField(max_length=255, blank=True, null=True, default='')
+    ambiente = models.CharField(max_length=1, blank=True, null=True, default='D')
+    nomeRobo = models.CharField(max_length=20, blank=True, null=True, default='RPBO0012')
+    preco_compra = models.FloatField(blank=True, null=True, default=0)
+    preco_venda = models.FloatField(blank=True, null=True, default=0)
+    preco_loss = models.FloatField(blank=True, null=True, default=0)
+    preco_gain = models.FloatField(blank=True, null=True, default=0)
+    qtdContratos = models.IntegerField(blank=True, null=True, default=0)
     data_compra = models.DateTimeField(auto_now_add=True, blank=True, null=True)
     data_venda = models.DateTimeField(blank=True, null=True)
-    status = models.CharField(max_length=1, blank=True, null=True)
-    perfil = models.CharField(max_length=1, blank=True, null=True)
-    tipo = models.CharField(max_length=1, blank=True, null=True )
-    corretora = models.CharField(max_length=100, blank=True, null=True)
+    status = models.CharField(max_length=1, blank=True, null=True, default='X')
+    perfil = models.CharField(max_length=1, blank=True, null=True, default='C')
+    tipo = models.CharField(max_length=1, blank=True, null=True , default='X')
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
 
@@ -184,6 +183,21 @@ class CustonResponse002(models.Model):
     created = models.DateTimeField(blank=True, null=True, db_column=False)
     updated = models.DateTimeField(blank=True, null=True, db_column=False)
     nome = models.CharField(blank=True, null=True, max_length=100,db_column=False)
+    class meta:
+        ordering = ("-created",)
+    def __str__(self):
+        return self.simbolo
+
+
+class CustonResponse004(models.Model):
+    id = models.IntegerField(primary_key=True, db_column=False)
+    simbolo = models.CharField(blank=True, null=True, max_length=10,db_column=False)
+    valor = models.FloatField(blank=True, null=True, db_column=False)
+    periodo = models.IntegerField(blank=True, null=True, db_column=False)
+    data = models.DateTimeField(blank=True, null=True, db_column=False)
+    tipo = models.CharField(blank=True, null=True, max_length=1,db_column=False)
+    created = models.DateTimeField(blank=True, null=True, db_column=False)
+    updated = models.DateTimeField(blank=True, null=True, db_column=False)
     class meta:
         ordering = ("-created",)
     def __str__(self):
