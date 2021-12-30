@@ -43,6 +43,7 @@ router.register(r'OrdensPendentes', CustonResponse002ViewSet, basename='CustonRe
 router.register(r'OrdensCriadas', CustonResponse003ViewSet, basename='CustonResponse003')
 router.register(r'OrdensPendentesPorCorretora', CustonResponse004ViewSet, basename='CustonResponse004')
 router.register(r'corretoras', CustonResponse005ViewSet, basename='CustonResponse005')
+router.register(r'corretorasPorOrdem', CustonResponse006ViewSet, basename='CustonResponse006')
 
 urlpatterns = [
     path('admin/', admin.site.urls),

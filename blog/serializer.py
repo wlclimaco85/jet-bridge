@@ -54,7 +54,7 @@ class OrderCompraVendaSerializer(serializers.ModelSerializer):
 class CustonResponse001Serializer(serializers.ModelSerializer):
     class Meta:
         model = CustonResponse001
-        fields = ['corretora_id','ordem_id','status','corretora','tipo','simbolo','preco_compra','preco_venda','data_compra','data_venda','created','ticket','preco_loss','preco_gain']
+        fields = ['corretora_id','ordem_id','status','tipo','simbolo','preco_compra','preco_venda','data_compra','data_venda','created','ticket','preco_loss','preco_gain']
 
 class CustonResponse002Serializer(serializers.ModelSerializer):
     class Meta:
@@ -71,4 +71,7 @@ class CustonResponse005Serializer(serializers.ModelSerializer):
         model = CustonResponse005
         fields = ['id','usuario','ordem_abertas_hoje','ordem_abertas_total','order_state_started' ,'order_state_placed' ,'order_state_canceled' ,'order_state_partial' , 'order_state_filled' ,'order_state_rejected' ,'order_state_expired' ,'order_state_request_add' ,'order_state_request_modify','order_state_request_cancel' ,'ordem_erro'  ]
 
-
+class CustonResponse006Serializer(serializers.ModelSerializer):
+    class Meta:
+        model = CustonResponse006
+        fields = ['ordem_id_id','nome','descricao']

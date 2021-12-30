@@ -224,6 +224,15 @@ class CustonResponse005(models.Model):
     def __str__(self):
         return self.ordem_erro
 
+class CustonResponse006(models.Model):
+    ordem_id_id = models.IntegerField(db_column=False)
+    nome = models.CharField(blank=True, null=True,max_length=200, db_column=False)
+    descricao = models.CharField(blank=True, null=True,max_length=200, db_column=False)
+    class meta:
+        ordering = ("-ordem_id_id",)
+    def __str__(self):
+        return self.ordem_id_id
+
 
     
 
