@@ -61,7 +61,7 @@ class StatusMaquinas(models.Model):
         return self.nomeMaquina
 
 class Corretora(models.Model):
-    nome = models.CharField(max_length=100)
+    nome = models.CharField(max_length=100,blank=True, null=True)
     usuario = models.IntegerField(blank=True, null=True )
     senha = models.CharField(max_length=100, blank=True, null=True)
     aplicativo = models.CharField(max_length=50, blank=True, null=True, default='MetaTrader')
@@ -70,6 +70,9 @@ class Corretora(models.Model):
     ambiente = models.CharField(max_length=1, blank=True, null=True, default='D')
     moeda = models.CharField(max_length=10, blank=True, null=True, default='BRL')
     saldo = models.FloatField(blank=True, null=True, default=0)
+    roboEnvioOrdem = models.CharField(max_length=1, blank=True, null=True, default='F')
+    roboRecebimentoOrdem = models.CharField(max_length=1, blank=True, null=True, default='F')
+    roboUpdateOrdem = models.CharField(max_length=1, blank=True, null=True, default='F')
     capitalLig = models.FloatField(blank=True, null=True, default=0)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)

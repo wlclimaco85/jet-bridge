@@ -140,27 +140,12 @@ class XmlsDetailView(DetailView):
     model = Xmls
 
 class OrderEnvioViewSet(viewsets.ModelViewSet):
-    futuredate = datetime.now()
-    start_date =  datetime(futuredate.year, futuredate.month, futuredate.day, 9, 00, 32, 11)
-    end_date = datetime(futuredate.year, futuredate.month, futuredate.day, 19, 00, 32, 11)
-    queryset = OrderEnvio.objects.filter(data__range=(start_date, end_date))
-    #queryset = OrderEnvio.objects.raw('SELECT id,name,pages FROM app_books WHERE pages=')# OrderEnvio.objects.filter(data__range=(start_date, end_date))
-   # queryset = OrderEnvio.objects.all()#.filter(data__gte=futuredate)
+    queryset = OrderEnvio.objects.all()
     serializer_class = OrderEnvioSerializer
-    filterset_class = OrdensFilter
-    
-   # queryset.filter(data_at__gte=futuredate)
-    
 
     @action(methods=['get'], detail=False)
-
-    def my_custom_sql(self, request):
-        return OrderEnvio.objects.raw('SELECT id,name,pages FROM app_books WHERE pages='+request.id)
-
-
-
     def newest(self, request):
-        newest = self.get_queryset().order_by('data').last()
+        newest = self.get_queryset().order_by('created').last()
         serializer = self.get_serializer_class()(newest)
         return Response(serializer.data)
 
