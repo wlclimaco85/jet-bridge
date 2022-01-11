@@ -459,6 +459,7 @@ class CustonResponse002ViewSet(viewsets.ModelViewSet):
             quert = quert + "AND R.CORRETORA_ID_ID = "+corretora_id+")"
         else:
             quert = quert + ")"
+        quert = quert + " O.DATA > '"+ str(futuredate.year)+"-"+str(futuredate.month)+"-"+str(futuredate.day)+" 00:38:40'";
         quert = quert + " order by O.id DESC"
         cc.execute(quert)
         "Return all rows from a cursor as a dict"
@@ -621,7 +622,7 @@ class CustonResponse004ViewSet(viewsets.ModelViewSet):
             quert = quert + "AND R.CORRETORA_ID_ID = "+corretora_id+")"
         else:
             quert = quert + ")"
-        quert = quert +  " AND o.data > '2021-12-29 00:38:40' order by O.id DESC"
+        quert = quert +  " AND o.data > '"+ str(futuredate.year)+"-"+str(futuredate.month)+"-"+str(futuredate.day)+" 00:38:40' order by O.id DESC"
         cc.execute(quert)
         "Return all rows from a cursor as a dict"
         columns = [col[0] for col in cc.description]
@@ -698,23 +699,24 @@ class CustonResponse005ViewSet(viewsets.ModelViewSet):
        # try:
         futuredate = datetime.now()
         start_date =  datetime(futuredate.year, futuredate.month, futuredate.day, 0, 32, 11)
-        quert = "SELECT C.ID as id ,C.USUARIO as usuario," 
+        quert = "SELECT C.ID AS ID ,C.USUARIO AS USUARIO, " 
         quert = quert +  "	(SELECT COUNT(O.*) FROM BLOG_ORDERENVIO O  "  
         quert = quert +  "		WHERE NOT EXISTS (SELECT * FROM BLOG_ORDEMSTATUS R WHERE R.ORDEM_ID_ID = O.ID AND R.CORRETORA_ID_ID = C.ID ) " 
-        quert = quert +  "		AND O.DATA > '2021-12-29 00:38:40') as ordem_abertas_hoje, " 
+        quert = quert +  "		AND O.DATA > '"+ str(futuredate.year)+"-"+str(futuredate.month)+"-"+str(futuredate.day)+" 00:38:40') as ordem_abertas_hoje, " 
         quert = quert +  "	(SELECT COUNT(O.*) FROM BLOG_ORDERENVIO O  "  
         quert = quert +  "		WHERE NOT EXISTS (SELECT * FROM BLOG_ORDEMSTATUS R WHERE R.ORDEM_ID_ID = O.ID AND R.CORRETORA_ID_ID = C.ID )) as ordem_abertas_total, " 
-        quert = quert +  "	(SELECT COUNT(*) FROM BLOG_ORDERCOMPRAVENDA O WHERE O.STATUS = 'A' AND O.CORRETORA_ID_ID = C.ID AND O.CREATED > '2021-12-29 00:38:40' ) as order_state_started , " 
-        quert = quert +  "	(SELECT COUNT(*) FROM BLOG_ORDERCOMPRAVENDA O WHERE O.STATUS = 'B' AND O.CORRETORA_ID_ID = C.ID AND O.CREATED > '2021-12-29 00:38:40' ) as order_state_placed , " 
-        quert = quert +  "	(SELECT COUNT(*) FROM BLOG_ORDERCOMPRAVENDA O WHERE O.STATUS = 'C' AND O.CORRETORA_ID_ID = C.ID AND O.CREATED > '2021-12-29 00:38:40' ) as order_state_canceled , " 
-        quert = quert +  "	(SELECT COUNT(*) FROM BLOG_ORDERCOMPRAVENDA O WHERE O.STATUS = 'D' AND O.CORRETORA_ID_ID = C.ID AND O.CREATED > '2021-12-29 00:38:40' ) as order_state_partial , " 
-        quert = quert +  "	(SELECT COUNT(*) FROM BLOG_ORDERCOMPRAVENDA O WHERE O.STATUS = 'E' AND O.CORRETORA_ID_ID = C.ID AND O.CREATED > '2021-12-29 00:38:40' ) as order_state_filled , " 
-        quert = quert +  "	(SELECT COUNT(*) FROM BLOG_ORDERCOMPRAVENDA O WHERE O.STATUS = 'F' AND O.CORRETORA_ID_ID = C.ID AND O.CREATED > '2021-12-29 00:38:40' ) as order_state_rejected , " 
-        quert = quert +  "	(SELECT COUNT(*) FROM BLOG_ORDERCOMPRAVENDA O WHERE O.STATUS = 'G' AND O.CORRETORA_ID_ID = C.ID AND O.CREATED > '2021-12-29 00:38:40' ) as order_state_expired , " 
-        quert = quert +  "	(SELECT COUNT(*) FROM BLOG_ORDERCOMPRAVENDA O WHERE O.STATUS = 'H' AND O.CORRETORA_ID_ID = C.ID AND O.CREATED > '2021-12-29 00:38:40' ) as order_state_request_add , " 
-        quert = quert +  "	(SELECT COUNT(*) FROM BLOG_ORDERCOMPRAVENDA O WHERE O.STATUS = 'I' AND O.CORRETORA_ID_ID = C.ID AND O.CREATED > '2021-12-29 00:38:40' ) as order_state_request_modify, " 
-        quert = quert +  "	(SELECT COUNT(*) FROM BLOG_ORDERCOMPRAVENDA O WHERE O.STATUS = 'J' AND O.CORRETORA_ID_ID = C.ID AND O.CREATED > '2021-12-29 00:38:40' ) as order_state_request_cancel , " 
-        quert = quert +  "	(SELECT COUNT(*) FROM BLOG_ORDERCOMPRAVENDA O WHERE O.STATUS = 'Z' AND O.CORRETORA_ID_ID = C.ID AND O.CREATED > '2021-12-29 00:38:40' ) as ordem_erro  " 
+        quert = quert +  "	(SELECT COUNT(*) FROM BLOG_ORDERCOMPRAVENDA O WHERE O.STATUS = 'A' AND O.CORRETORA_ID_ID = C.ID AND O.CREATED > '"+ str(futuredate.year)+"-"+str(futuredate.month)+"-"+str(futuredate.day)+" 00:38:40' ) as order_state_started , " 
+        quert = quert +  "	(SELECT COUNT(*) FROM BLOG_ORDERCOMPRAVENDA O WHERE O.STATUS = 'B' AND O.CORRETORA_ID_ID = C.ID AND O.CREATED > '"+ str(futuredate.year)+"-"+str(futuredate.month)+"-"+str(futuredate.day)+" 00:38:40' ) as order_state_placed , " 
+        quert = quert +  "	(SELECT COUNT(*) FROM BLOG_ORDERCOMPRAVENDA O WHERE O.STATUS = 'C' AND O.CORRETORA_ID_ID = C.ID AND O.CREATED > '"+ str(futuredate.year)+"-"+str(futuredate.month)+"-"+str(futuredate.day)+" 00:38:40' ) as order_state_canceled , " 
+        quert = quert +  "	(SELECT COUNT(*) FROM BLOG_ORDERCOMPRAVENDA O WHERE O.STATUS = 'D' AND O.CORRETORA_ID_ID = C.ID AND O.CREATED > '"+ str(futuredate.year)+"-"+str(futuredate.month)+"-"+str(futuredate.day)+" 00:38:40' ) as order_state_partial , " 
+        quert = quert +  "	(SELECT COUNT(*) FROM BLOG_ORDERCOMPRAVENDA O WHERE O.STATUS = 'E' AND O.CORRETORA_ID_ID = C.ID AND O.CREATED > '"+ str(futuredate.year)+"-"+str(futuredate.month)+"-"+str(futuredate.day)+" 00:38:40' ) as order_state_filled , " 
+        quert = quert +  "	(SELECT COUNT(*) FROM BLOG_ORDERCOMPRAVENDA O WHERE O.STATUS = 'F' AND O.CORRETORA_ID_ID = C.ID AND O.CREATED > '"+ str(futuredate.year)+"-"+str(futuredate.month)+"-"+str(futuredate.day)+" 00:38:40' ) as order_state_rejected , " 
+        quert = quert +  "	(SELECT COUNT(*) FROM BLOG_ORDERCOMPRAVENDA O WHERE O.STATUS = 'G' AND O.CORRETORA_ID_ID = C.ID AND O.CREATED > '"+ str(futuredate.year)+"-"+str(futuredate.month)+"-"+str(futuredate.day)+" 00:38:40' ) as order_state_expired , " 
+        quert = quert +  "	(SELECT COUNT(*) FROM BLOG_ORDERCOMPRAVENDA O WHERE O.STATUS = 'H' AND O.CORRETORA_ID_ID = C.ID AND O.CREATED > '"+ str(futuredate.year)+"-"+str(futuredate.month)+"-"+str(futuredate.day)+" 00:38:40' ) as order_state_request_add , " 
+        quert = quert +  "	(SELECT COUNT(*) FROM BLOG_ORDERCOMPRAVENDA O WHERE O.STATUS = 'I' AND O.CORRETORA_ID_ID = C.ID AND O.CREATED > '"+ str(futuredate.year)+"-"+str(futuredate.month)+"-"+str(futuredate.day)+" 00:38:40' ) as order_state_request_modify, " 
+        quert = quert +  "	(SELECT COUNT(*) FROM BLOG_ORDERCOMPRAVENDA O WHERE O.STATUS = 'J' AND O.CORRETORA_ID_ID = C.ID AND O.CREATED > '"+ str(futuredate.year)+"-"+str(futuredate.month)+"-"+str(futuredate.day)+" 00:38:40' ) as order_state_request_cancel , " 
+        quert = quert +  "	(SELECT COUNT(*) FROM BLOG_ORDERCOMPRAVENDA O WHERE O.STATUS = 'Z' AND O.CORRETORA_ID_ID = C.ID AND O.CREATED > '"+ str(futuredate.year)+"-"+str(futuredate.month)+"-"+str(futuredate.day)+" 00:38:40' ) as ordem_erro,  " 
+        quert = quert +  "	(SELECT COUNT(*) FROM BLOG_ORDERCOMPRAVENDA O WHERE O.CORRETORA_ID_ID = C.ID AND O.CREATED > '"+ str(futuredate.year)+"-"+str(futuredate.month)+"-"+str(futuredate.day)+" 00:38:40' ) as ordem_dia   " 
         quert = quert +  "FROM BLOG_CORRETORA C  " 
         quert = quert +  "ORDER BY ID DESC " 
         cc.execute(quert)

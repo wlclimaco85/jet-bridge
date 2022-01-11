@@ -222,6 +222,10 @@ class CustonResponse005(models.Model):
     order_state_request_modify = models.IntegerField(blank=True, null=True, db_column=False)
     order_state_request_cancel = models.IntegerField(blank=True, null=True, db_column=False)
     ordem_erro = models.IntegerField(blank=True, null=True, db_column=False)
+    ROBOENVIOORDEM = models.CharField(blank=True, null=True, db_column=False, max_length=1)
+    ROBORECEBIMENTOORDEM = models.CharField(blank=True, null=True, db_column=False, max_length=1)
+    ROBOUPDATEORDEM = models.CharField(blank=True, null=True, db_column=False, max_length=1)
+    ordem_dia = models.IntegerField(blank=True, null=True, db_column=False)
     class meta:
         ordering = ("-ordem_erro",)
     def __str__(self):
