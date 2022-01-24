@@ -26,9 +26,6 @@ class ParceiroFilter(filters.FilterSet):
 class OrdensFilter(filters.FilterSet):
     class Meta:
         model = OrderEnvio
-        #fields = ({
-        #    'data':['gte', 'lte', 'exact', 'gt', 'lt']
-        #})
         fields = {
             'id': ['lt']
         }
@@ -442,7 +439,7 @@ class CustonResponse002ViewSet(viewsets.ModelViewSet):
     def get_queryset(self):
         from collections import namedtuple
        # cc = connection.cursor()
-        
+        futuredate = datetime.now();
         corretora_id = self.request.query_params.get('corretora_id')
         dataInicio = self.request.query_params.get('dataInicio')
         dataFim = self.request.query_params.get('dataFim')
@@ -459,7 +456,7 @@ class CustonResponse002ViewSet(viewsets.ModelViewSet):
             quert = quert + "AND R.CORRETORA_ID_ID = "+corretora_id+")"
         else:
             quert = quert + ")"
-        quert = quert + " O.DATA > '"+ str(futuredate.year)+"-"+str(futuredate.month)+"-"+str(futuredate.day)+" 00:38:40'";
+        quert = quert + " AND O.DATA > '"+ str(futuredate.year)+"-"+str(futuredate.month)+"-"+str(futuredate.day)+" 00:38:40'";
         quert = quert + " order by O.id DESC"
         cc.execute(quert)
         "Return all rows from a cursor as a dict"
@@ -622,7 +619,7 @@ class CustonResponse004ViewSet(viewsets.ModelViewSet):
             quert = quert + "AND R.CORRETORA_ID_ID = "+corretora_id+")"
         else:
             quert = quert + ")"
-        quert = quert +  " AND o.data > '"+ str(futuredate.year)+"-"+str(futuredate.month)+"-"+str(futuredate.day)+" 00:38:40' order by O.id DESC"
+        quert = quert +  " AND O.data > '"+ str(futuredate.year)+"-"+str(futuredate.month)+"-"+str(futuredate.day)+" 00:38:40' order by O.id DESC"
         cc.execute(quert)
         "Return all rows from a cursor as a dict"
         columns = [col[0] for col in cc.description]
