@@ -43,7 +43,14 @@ class OrdemStatusFilter(filters.FilterSet):
         model = OrdemStatus
         fields = (
             'corretora_id','ordem_id','status'
-        )    
+        )   
+
+class OrdemZeradaFilter(filters.FilterSet):
+    class Meta:
+        model = OrdemZerada
+        fields = (
+            'corretora_id','ordem_id','status'
+        )  
 
 class OrderCompraVendaFilter(filters.FilterSet):
     class Meta:
@@ -266,6 +273,31 @@ class OrderCompraVendaViewSet(viewsets.ModelViewSet):
     queryset = OrderCompraVenda.objects.all()
     serializer_class = OrderCompraVendaSerializer
     filterset_class = OrderCompraVendaFilter
+    
+    @action(methods=['get'], detail=False)
+    def newest(self, request):
+        newest = self.get_queryset().order_by('created').last()
+        serializer = self.get_serializer_class()(newest)
+        return Response(serializer.data)
+
+    def destroy(self, request, *args, **kwargs):
+        try:
+            instance = self.get_object()
+            self.perform_destroy(instance)
+        except Http404:
+            pass
+        return Response(status=status.HTTP_204_NO_CONTENT)
+
+    def perform_destroy(self, instance):
+        instance.delete()
+
+    def put(self, request, *args, **kwargs):
+        return self.update(request, *args, **kwargs)
+
+class OrdemZeradaViewSet(viewsets.ModelViewSet):
+    queryset = OrdemZerada.objects.all()
+    serializer_class = OrdemZeradaSerializer
+    filterset_class = OrdemZeradaFilter
     
     @action(methods=['get'], detail=False)
     def newest(self, request):
@@ -786,6 +818,82 @@ class CustonResponse006ViewSet(viewsets.ModelViewSet):
         quert = " SELECT T.ORDEM_ID_ID, e.NOME,E.DESCRICAO FROM BLOG_ESTRATEGIAS E LEFT JOIN BLOG_REQUICAOEST T ON (E.ID = T.ESTR_ID_ID )"
         if(requsicaoId):
             quert = quert +  " WHERE T.ORDEM_ID_ID = "+requsicaoId+"	"  
+        
+        cc.execute(quert)
+        "Return all rows from a cursor as a dict"
+        columns = [col[0] for col in cc.description]
+        aa = [
+            dict(zip(columns, row))
+            for row in cc.fetchall()
+        ]
+        queryset = aa
+      #  finally:
+        cc.close()
+       # queryset = row #Model.objects.filter(location__distance_lte=(location, D(m=distance))).distance(location).order_by('distance')
+
+        return queryset
+
+    def dictfetchall4(cursor):
+        "Return all rows from a cursor as a dict"
+        columns = [col[0] for col in cursor.description]
+        return [
+            dict(zip(columns, row))
+            for row in cursor.fetchall()
+        ]
+    
+    def dictfetchall(cursor):
+        "Return all rows from a cursor as a dict"
+        columns = [col[0] for col in cursor.description]
+        return [
+            dict(zip(columns, row))
+            for row in cursor.fetchall()
+        ]
+
+class CustonResponse007ViewSet(viewsets.ModelViewSet):
+    
+    def dictfetchall(cursor):
+        "Return all rows from a cursor as a dict"
+        columns = [col[0] for col in cursor.description]
+        return [
+            dict(zip(columns, row))
+            for row in cursor.fetchall()
+        ]
+    
+    
+    from collections import namedtuple
+    c = connection.cursor()
+    try:
+        c.execute("SELECT R.corretora_id_id as corretora_id, R.ordem_id_id as ordem_id ,R.STATUS as status FROM Blog_ordercompravenda R LEFT JOIN BLOG_ORDERENVIO O ON (R.ordem_id_id = O.ID) LEFT JOIN BLOG_REQUICAOEST E ON (R.ordem_id_id = E.ordem_id_id) LEFT JOIN BLOG_ESTRATEGIAS Gg ON (E.estr_id_id = Gg.id)     WHERE GG.NOME IS NOT NULL and r.id = 618 order by r.data_compra")
+        row = dictfetchall(c)
+    finally:
+        c.close()
+    
+    queryset = row
+    serializer_class = CustonResponse007Serializer
+    def dictfetchall3(cursor):
+        "Return all rows from a cursor as a dict"
+        columns = [col[0] for col in cursor.description]
+        return [
+            dict(zip(columns, row))
+            for row in cursor.fetchall()
+        ]
+
+    def get_queryset(self):
+        from collections import namedtuple
+       # cc = connection.cursor()
+
+        from collections import namedtuple
+        cc = connection.cursor()
+       # try:
+
+        corretora_id = self.request.query_params.get('corretora_id')
+        from collections import namedtuple
+        cc = connection.cursor()
+       # try:
+        quert = "SELECT O.ID, O.CORRETORA_ID_ID AS CORRETORA_ID, O.TICKET,O.SIMBOLO, O.ORDEM_ID_ID AS QTDCONTRATOS, O.TICKET AS POSITIONID, O.STATUS, O.TIPO FROM BLOG_ORDERCOMPRAVENDA O "
+        quert = quert + " WHERE O.ORDEM_ID_ID IN (SELECT ORDEM_ID_ID FROM BLOG_ORDEMZERADA Z WHERE Z.STATUS = 'Z') "
+        if (corretora_id):
+            quert = quert + " AND O.CORRETORA_ID_ID = "+corretora_id+" ";
         
         cc.execute(quert)
         "Return all rows from a cursor as a dict"

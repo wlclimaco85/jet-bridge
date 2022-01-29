@@ -37,6 +37,7 @@ router.register(r'requicaoEst', RequicaoEstViewSet )
 router.register(r'orderCompraVenda', OrderCompraVendaViewSet )
 router.register(r'orderEnvio', OrderEnvioViewSet )
 router.register(r'OrdemStatus', OrdemStatusViewSet )
+router.register(r'OrdemZerada', OrdemZeradaViewSet )
 #router.register(r'CustonResponse', CustonResponse001ViewSet )
 router.register(r'CustonResponse', CustonResponse001ViewSet, basename='CustonResponse001')
 router.register(r'OrdensPendentes', CustonResponse002ViewSet, basename='CustonResponse002')
@@ -44,6 +45,7 @@ router.register(r'OrdensCriadas', CustonResponse003ViewSet, basename='CustonResp
 router.register(r'OrdensPendentesPorCorretora', CustonResponse004ViewSet, basename='CustonResponse004')
 router.register(r'corretoras', CustonResponse005ViewSet, basename='CustonResponse005')
 router.register(r'corretorasPorOrdem', CustonResponse006ViewSet, basename='CustonResponse006')
+router.register(r'corretorasPorOrdemZerar', CustonResponse007ViewSet, basename='CustonResponse007')
 
 urlpatterns = [
     path('admin/', admin.site.urls),

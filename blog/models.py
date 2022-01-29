@@ -242,7 +242,30 @@ class CustonResponse006(models.Model):
     def __str__(self):
         return self.ordem_id_id
 
+class CustonResponse007(models.Model):
+    id = models.IntegerField(primary_key=True, db_column=False)
+    corretora_id = models.IntegerField(blank=True, null=True, db_column=False)
+    ticket = models.IntegerField(blank=True, null=True, db_column=False)
+    simbolo = models.CharField(max_length=200,blank=True, null=True, db_column=False)
+    qtdContratos = models.IntegerField(blank=True, null=True, db_column=False)
+    positionId = models.IntegerField(blank=True, null=True, db_column=False)
+    status = models.CharField(max_length=200,blank=True, null=True, db_column=False)
+    tipo = models.CharField(max_length=200,blank=True, null=True, db_column=False)
+    class meta:
+        ordering = ("-qtdContratos",)
+    def __str__(self):
+        return self.qtdContratos
 
-    
+class OrdemZerada(models.Model):
+    corretora_id = models.ForeignKey(Corretora, on_delete=models.CASCADE)
+    ordem_id = models.ForeignKey(OrderEnvio, on_delete=models.CASCADE)
+    simbolo = models.CharField(max_length=200,blank=True, null=True)
+    created = models.DateTimeField(auto_now_add=True)
+    updated = models.DateTimeField(auto_now=True)
+    status = models.CharField(max_length=1, blank=True, null=True, default='Z')
+    class meta:
+        ordering = ("-created",)
+    def __str__(self):
+        return self.id
 
     

@@ -24,7 +24,7 @@ class XmlsSerializer(serializers.ModelSerializer):
 class OrderEnvioSerializer(serializers.ModelSerializer):
     class Meta:
         model = OrderEnvio
-        fields = ['id','simbolo','valor','data','tipo','periodo','created','updated']
+        fields = ['id','simbolo','valor','data','tipo','periodo','created','updated','corretora_id']
 
 class CorretoraSerializer(serializers.ModelSerializer):
     class Meta:
@@ -75,3 +75,13 @@ class CustonResponse006Serializer(serializers.ModelSerializer):
     class Meta:
         model = CustonResponse006
         fields = ['ordem_id_id','nome','descricao']
+
+class CustonResponse007Serializer(serializers.ModelSerializer):
+    class Meta:
+        model = CustonResponse007
+        fields = ['id','corretora_id','ticket','simbolo','qtdContratos','positionId','status','tipo']
+
+class OrdemZeradaSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = OrdemZerada
+        fields = ['id','corretora_id','ordem_id','simbolo','created','updated','status']
