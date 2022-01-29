@@ -248,13 +248,14 @@ class CustonResponse007(models.Model):
     ticket = models.IntegerField(blank=True, null=True, db_column=False)
     simbolo = models.CharField(max_length=200,blank=True, null=True, db_column=False)
     qtdContratos = models.IntegerField(blank=True, null=True, db_column=False)
+    ordem_id_id = models.IntegerField(blank=True, null=True, db_column=False)
     positionId = models.IntegerField(blank=True, null=True, db_column=False)
     status = models.CharField(max_length=200,blank=True, null=True, db_column=False)
     tipo = models.CharField(max_length=200,blank=True, null=True, db_column=False)
     class meta:
-        ordering = ("-qtdContratos",)
+        ordering = ("-ordem_id_id",)
     def __str__(self):
-        return self.qtdContratos
+        return self.ordem_id_id
 
 class OrdemZerada(models.Model):
     corretora_id = models.ForeignKey(Corretora, on_delete=models.CASCADE)

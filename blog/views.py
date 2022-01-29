@@ -890,7 +890,7 @@ class CustonResponse007ViewSet(viewsets.ModelViewSet):
         from collections import namedtuple
         cc = connection.cursor()
        # try:
-        quert = "SELECT O.ID, O.CORRETORA_ID_ID AS CORRETORA_ID, O.TICKET,O.SIMBOLO, O.ORDEM_ID_ID AS QTDCONTRATOS, O.TICKET AS POSITIONID, O.STATUS, O.TIPO FROM BLOG_ORDERCOMPRAVENDA O "
+        quert = "SELECT O.ID, O.CORRETORA_ID_ID AS CORRETORA_ID, O.TICKET,O.SIMBOLO, O.ORDEM_ID_ID AS QTDCONTRATOS, O.TICKET AS POSITIONID, O.STATUS, O.TIPO,O.ORDEM_ID_ID FROM BLOG_ORDERCOMPRAVENDA O "
         quert = quert + " WHERE O.ORDEM_ID_ID IN (SELECT ORDEM_ID_ID FROM BLOG_ORDEMZERADA Z WHERE Z.STATUS = 'Z') "
         if (corretora_id):
             quert = quert + " AND O.CORRETORA_ID_ID = "+corretora_id+" ";

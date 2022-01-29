@@ -79,7 +79,7 @@ class CustonResponse006Serializer(serializers.ModelSerializer):
 class CustonResponse007Serializer(serializers.ModelSerializer):
     class Meta:
         model = CustonResponse007
-        fields = ['id','corretora_id','ticket','simbolo','qtdContratos','positionId','status','tipo']
+        fields = ['id','corretora_id','ticket','simbolo','qtdContratos','positionId','status','tipo','ordem_id_id']
 
 class OrdemZeradaSerializer(serializers.ModelSerializer):
     class Meta:
