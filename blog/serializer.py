@@ -44,7 +44,7 @@ class RequicaoEstSerializer(serializers.ModelSerializer):
 class OrdemStatusSerializer(serializers.ModelSerializer):
     class Meta:
         model = OrdemStatus
-        fields = ['id','corretora_id','ordem_id','status', 'created','updated']
+        fields = ['id','corretora_id','ordem_id','status', 'created','updated','motivo']
 
 class OrderCompraVendaSerializer(serializers.ModelSerializer):
     class Meta:
