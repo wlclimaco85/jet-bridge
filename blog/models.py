@@ -103,7 +103,7 @@ class Estrategias(models.Model):
     status = models.CharField(max_length=1, blank=True, null=True)
     created = models.DateTimeField(auto_now_add=True, blank=True, null=True)
     updated = models.DateTimeField(auto_now=True, blank=True, null=True)
-
+    isteste = models.CharField(max_length=1, blank=True, null=True, default='N')
     class meta:
         ordering = ("-created",)
     def __str__(self):

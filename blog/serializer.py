@@ -34,7 +34,7 @@ class CorretoraSerializer(serializers.ModelSerializer):
 class EstrategiasSerializer(serializers.ModelSerializer):
     class Meta:
         model = Estrategias
-        fields = ['id','nome','descricao','status','created','updated']
+        fields = ['id','nome','descricao','status','created','updated','isteste']
 
 class RequicaoEstSerializer(serializers.ModelSerializer):
     class Meta:
