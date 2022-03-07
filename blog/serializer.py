@@ -85,3 +85,13 @@ class OrdemZeradaSerializer(serializers.ModelSerializer):
     class Meta:
         model = OrdemZerada
         fields = ['id','corretora_id','ordem_id','simbolo','created','updated','status']
+
+class RobosSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Robos
+        fields = [ 'id','nome','descricao','dataUltUp','version','created','updated','status']
+
+class ConfiguracoesSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Configuracoes
+        fields = ['id', 'corretora_id','robo_id','urlPrincipal','dataConf','loteWin','loteWdo','loteB3','gainDiario','lossDiario','lossWin','gainWin','lossWdo','gainWdo','lossB3','gainB3','created','updated']

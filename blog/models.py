@@ -270,4 +270,40 @@ class OrdemZerada(models.Model):
     def __str__(self):
         return self.id
 
+class Robos(models.Model):
+    nome = models.CharField(max_length=100,blank=True, null=True)
+    descricao = models.CharField(max_length=200,blank=True, null=True)
+    dataUltUp = models.DateTimeField(auto_now_add=True)
+    version = models.CharField(max_length=10,blank=True, null=True)
+    created = models.DateTimeField(auto_now_add=True)
+    updated = models.DateTimeField(auto_now=True)
+    status = models.CharField(max_length=1, blank=True, null=True, default='Z')
+    class meta:
+        ordering = ("-created",)
+    def __str__(self):
+        return self.id
+
+class Configuracoes(models.Model):
+    corretora_id = models.ForeignKey(Corretora, on_delete=models.CASCADE, blank=True, null=True)
+    robo_id = models.ForeignKey(Robos, on_delete=models.CASCADE, blank=True, null=True)
+    urlPrincipal = models.CharField(max_length=255, blank=True, null=True)
+    dataConf = models.DateTimeField(auto_now_add=True, blank=True, null=True)
+    loteWin = models.FloatField(blank=True, null=True, default=0)
+    loteWdo = models.FloatField(blank=True, null=True, default=0)
+    loteB3 = models.FloatField(max_length=1, blank=True, null=True, default='X')
+    gainDiario = models.FloatField(blank=True, null=True, default=0)
+    lossDiario = models.FloatField(blank=True, null=True, default=0)
+    lossWin = models.FloatField(blank=True, null=True, default=0)
+    gainWin = models.FloatField(blank=True, null=True, default=0)
+    lossWdo = models.FloatField(blank=True, null=True, default=0)
+    gainWdo = models.FloatField(blank=True, null=True, default=0)
+    lossB3 = models.FloatField(blank=True, null=True, default=0)
+    gainB3 = models.FloatField(blank=True, null=True, default=0)
+    created = models.DateTimeField(auto_now_add=True)
+    updated = models.DateTimeField(auto_now=True)
+
+    class meta:
+        ordering = ("-created",)
+    def __str__(self):
+        return self.created
     

@@ -16,12 +16,27 @@ from django.http import Http404
 from datetime import datetime, timedelta
 from django.db import connection
 
+
+class ConfiguracoesFilter(filters.FilterSet):
+    class Meta:
+        model = Configuracoes
+        fields = (
+            'corretora_id','dataConf','robo_id'
+        )  
+
 class ParceiroFilter(filters.FilterSet):
     class Meta:
         model = Parceiro
         fields = (
             'cnpj','author','created'
-        )        
+        )  
+
+class RobosFilter(filters.FilterSet):
+    class Meta:
+        model = Robos
+        fields = (
+            'descricao','version','nome'
+        )       
 
 class OrdensFilter(filters.FilterSet):
     class Meta:
@@ -193,13 +208,60 @@ class CorretoraViewSet(viewsets.ModelViewSet):
         return self.update(request, *args, **kwargs)
 
 class OrdemStatusViewSet(viewsets.ModelViewSet):
-   # futuredate = datetime.now()
-   # start_date =  datetime(futuredate.year, futuredate.month, futuredate.day, 9, 00, 32, 11)
-   #end_date = datetime.now()
-   # queryset = OrdemStatus.objects.filter(data__range=(start_date, end_date))
     queryset = OrdemStatus.objects.all()
     serializer_class = OrdemStatusSerializer
     filterset_class = OrdemStatusFilter
+
+    @action(methods=['get'], detail=False)
+    def newest(self, request):
+        newest = self.get_queryset().order_by('created').last()
+        serializer = self.get_serializer_class()(newest)
+        return Response(serializer.data)
+
+    def destroy(self, request, *args, **kwargs):
+        try:
+            instance = self.get_object()
+            self.perform_destroy(instance)
+        except Http404:
+            pass
+        return Response(status=status.HTTP_204_NO_CONTENT)
+
+    def perform_destroy(self, instance):
+        instance.delete()
+
+    def put(self, request, *args, **kwargs):
+        return self.update(request, *args, **kwargs)
+
+class RobosViewSet(viewsets.ModelViewSet):
+    queryset = Robos.objects.all()
+    serializer_class = RobosSerializer
+    filterset_class = RobosFilter
+
+    @action(methods=['get'], detail=False)
+    def newest(self, request):
+        newest = self.get_queryset().order_by('created').last()
+        serializer = self.get_serializer_class()(newest)
+        return Response(serializer.data)
+
+    def destroy(self, request, *args, **kwargs):
+        try:
+            instance = self.get_object()
+            self.perform_destroy(instance)
+        except Http404:
+            pass
+        return Response(status=status.HTTP_204_NO_CONTENT)
+
+    def perform_destroy(self, instance):
+        instance.delete()
+
+    def put(self, request, *args, **kwargs):
+        return self.update(request, *args, **kwargs)
+
+
+class ConfiguracoesViewSet(viewsets.ModelViewSet):
+    queryset = Configuracoes.objects.all()
+    serializer_class = ConfiguracoesSerializer
+    filterset_class = ConfiguracoesFilter
 
     @action(methods=['get'], detail=False)
     def newest(self, request):
@@ -333,14 +395,14 @@ class CustonResponse001ViewSet(viewsets.ModelViewSet):
     
     
     from collections import namedtuple
-    c = connection.cursor()
-    try:
-        c.execute("SELECT R.corretora_id_id as corretora_id, R.ordem_id_id as ordem_id ,R.STATUS as status, gg.nome as corretora FROM Blog_ordercompravenda R LEFT JOIN BLOG_ORDERENVIO O ON (R.ordem_id_id = O.ID) LEFT JOIN BLOG_REQUICAOEST E ON (R.ordem_id_id = E.ordem_id_id) LEFT JOIN BLOG_ESTRATEGIAS Gg ON (E.estr_id_id = Gg.id)     WHERE GG.NOME IS NOT NULL and r.id = 618 order by r.data_compra")
-        row = dictfetchall(c)
-    finally:
-        c.close()
+  #  c = connection.cursor()
+ #   try:
+      #  c.execute("SELECT R.corretora_id_id as corretora_id, R.ordem_id_id as ordem_id ,R.STATUS as status, gg.nome as corretora FROM Blog_ordercompravenda R LEFT JOIN BLOG_ORDERENVIO O ON (R.ordem_id_id = O.ID) LEFT JOIN BLOG_REQUICAOEST E ON (R.ordem_id_id = E.ordem_id_id) LEFT JOIN BLOG_ESTRATEGIAS Gg ON (E.estr_id_id = Gg.id)     WHERE GG.NOME IS NOT NULL and r.id = 618 order by r.data_compra")
+      #  row = dictfetchall(c)
+  #  finally:
+  #      c.close()
     
-    queryset = row
+   # queryset = row
     serializer_class = CustonResponse001Serializer
     def dictfetchall3(cursor):
         "Return all rows from a cursor as a dict"
@@ -451,14 +513,7 @@ class CustonResponse002ViewSet(viewsets.ModelViewSet):
     
     
     from collections import namedtuple
-    c = connection.cursor()
-    try:
-        c.execute("SELECT R.corretora_id_id as corretora_id, R.ordem_id_id as ordem_id ,R.STATUS as status, gg.nome as corretora FROM Blog_ordercompravenda R LEFT JOIN BLOG_ORDERENVIO O ON (R.ordem_id_id = O.ID) LEFT JOIN BLOG_REQUICAOEST E ON (R.ordem_id_id = E.ordem_id_id) LEFT JOIN BLOG_ESTRATEGIAS Gg ON (E.estr_id_id = Gg.id)     WHERE GG.NOME IS NOT NULL and r.id = 618 order by r.data_compra")
-        row = dictfetchall(c)
-    finally:
-        c.close()
     
-    queryset = row
     serializer_class = CustonResponse002Serializer
     def dictfetchall3(cursor):
         "Return all rows from a cursor as a dict"
@@ -532,14 +587,7 @@ class CustonResponse003ViewSet(viewsets.ModelViewSet):
     
     
     from collections import namedtuple
-    c = connection.cursor()
-    try:
-        c.execute("SELECT R.corretora_id_id as corretora_id, R.ordem_id_id as ordem_id ,R.STATUS as status, gg.nome as corretora FROM Blog_ordercompravenda R LEFT JOIN BLOG_ORDERENVIO O ON (R.ordem_id_id = O.ID) LEFT JOIN BLOG_REQUICAOEST E ON (R.ordem_id_id = E.ordem_id_id) LEFT JOIN BLOG_ESTRATEGIAS Gg ON (E.estr_id_id = Gg.id)     WHERE GG.NOME IS NOT NULL and r.id = 618 order by r.data_compra")
-        row = dictfetchall(c)
-    finally:
-        c.close()
-    
-    queryset = row
+
     serializer_class = CustonResponse002Serializer
     def dictfetchall3(cursor):
         "Return all rows from a cursor as a dict"
@@ -612,14 +660,7 @@ class CustonResponse004ViewSet(viewsets.ModelViewSet):
     
     
     from collections import namedtuple
-    c = connection.cursor()
-    try:
-        c.execute("SELECT R.corretora_id_id as corretora_id, R.ordem_id_id as ordem_id ,R.STATUS as status FROM Blog_ordercompravenda R LEFT JOIN BLOG_ORDERENVIO O ON (R.ordem_id_id = O.ID) LEFT JOIN BLOG_REQUICAOEST E ON (R.ordem_id_id = E.ordem_id_id) LEFT JOIN BLOG_ESTRATEGIAS Gg ON (E.estr_id_id = Gg.id)     WHERE GG.NOME IS NOT NULL and r.id = 618 order by r.data_compra")
-        row = dictfetchall(c)
-    finally:
-        c.close()
-    
-    queryset = row
+
     serializer_class = CustonResponse004Serializer
     def dictfetchall3(cursor):
         "Return all rows from a cursor as a dict"
@@ -695,14 +736,7 @@ class CustonResponse005ViewSet(viewsets.ModelViewSet):
     
     
     from collections import namedtuple
-    c = connection.cursor()
-    try:
-        c.execute("SELECT R.corretora_id_id as corretora_id, R.ordem_id_id as ordem_id ,R.STATUS as status FROM Blog_ordercompravenda R LEFT JOIN BLOG_ORDERENVIO O ON (R.ordem_id_id = O.ID) LEFT JOIN BLOG_REQUICAOEST E ON (R.ordem_id_id = E.ordem_id_id) LEFT JOIN BLOG_ESTRATEGIAS Gg ON (E.estr_id_id = Gg.id)     WHERE GG.NOME IS NOT NULL and r.id = 618 order by r.data_compra")
-        row = dictfetchall(c)
-    finally:
-        c.close()
-    
-    queryset = row
+
     serializer_class = CustonResponse005Serializer
     def dictfetchall3(cursor):
         "Return all rows from a cursor as a dict"
@@ -791,13 +825,7 @@ class CustonResponse006ViewSet(viewsets.ModelViewSet):
     
     from collections import namedtuple
     c = connection.cursor()
-    try:
-        c.execute("SELECT R.corretora_id_id as corretora_id, R.ordem_id_id as ordem_id ,R.STATUS as status FROM Blog_ordercompravenda R LEFT JOIN BLOG_ORDERENVIO O ON (R.ordem_id_id = O.ID) LEFT JOIN BLOG_REQUICAOEST E ON (R.ordem_id_id = E.ordem_id_id) LEFT JOIN BLOG_ESTRATEGIAS Gg ON (E.estr_id_id = Gg.id)     WHERE GG.NOME IS NOT NULL and r.id = 618 order by r.data_compra")
-        row = dictfetchall(c)
-    finally:
-        c.close()
-    
-    queryset = row
+
     serializer_class = CustonResponse006Serializer
     def dictfetchall3(cursor):
         "Return all rows from a cursor as a dict"
@@ -861,14 +889,7 @@ class CustonResponse007ViewSet(viewsets.ModelViewSet):
     
     
     from collections import namedtuple
-    c = connection.cursor()
-    try:
-        c.execute("SELECT R.corretora_id_id as corretora_id, R.ordem_id_id as ordem_id ,R.STATUS as status FROM Blog_ordercompravenda R LEFT JOIN BLOG_ORDERENVIO O ON (R.ordem_id_id = O.ID) LEFT JOIN BLOG_REQUICAOEST E ON (R.ordem_id_id = E.ordem_id_id) LEFT JOIN BLOG_ESTRATEGIAS Gg ON (E.estr_id_id = Gg.id)     WHERE GG.NOME IS NOT NULL and r.id = 618 order by r.data_compra")
-        row = dictfetchall(c)
-    finally:
-        c.close()
-    
-    queryset = row
+
     serializer_class = CustonResponse007Serializer
     def dictfetchall3(cursor):
         "Return all rows from a cursor as a dict"
