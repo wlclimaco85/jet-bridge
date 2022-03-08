@@ -1,0 +1,35 @@
+Pyton passos 
+//Comandos Python
+python -m venv venv   //Criar ambiente virtual
+.\venv\Scripts\activate  //Start ambiente virtual 
+pip install django // instalar django
+python .\manage.py runserver  //Startr server django
+python .\manage.py migrate // importar componentes.
+python .\manage.py showmigrations // verificar status mymigrate
+python .\manage.py  startapp blog // criar app 
+python .\manage.py makemigrations // atualizar banco de dados
+python .\manage.py sqlmigrate blog 0001 // atualizar banco de dados
+python .\manage.py migrate blog // atualizar banco de dados
+python .\manage.py migrate --run-syncdb
+python .\manage.py  createsuperuser 
+pip install ipython //ferramenta de sql
+python .\manage.py shell abrir sql
+pip install django-environ
+pip install whitenoise
+
+
+
+//Comandos Flutter
+flutter doctor
+flutter emulators
+flutter emulators -- launch Nexus 5X API 29
+
+
+
+https://www.youtube.com/watch?v=xSC8j3gl7xM&ab_channel=AluraCursosOnline
+https://www.marketdatacloud.com.br/APIs/api-rest/
+https://www.youtube.com/results?search_query=flutter
+
+
+
+http://127.0.0.1:8000/OrdensPendentesPorCorretora/

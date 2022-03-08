@@ -45,3 +45,11 @@ class EstrategiasAdmin(admin.ModelAdmin):
 @admin.register(OrderCompraVenda)
 class OrderCompraVendaAdmin(admin.ModelAdmin):
     list_display = ('id','ticket','ordem_id','simbolo','ambiente','nomeRobo','preco_compra','preco_venda','preco_loss','preco_gain','qtdContratos','data_compra','data_venda','status','tipo','created','updated')
+
+@admin.register(Robos)
+class RobosAdmin(admin.ModelAdmin):
+    list_display = ('id','nome','descricao','dataUltUp','version','created','updated','status')
+
+@admin.register(Configuracoes)
+class ConfiguracoesAdmin(admin.ModelAdmin):
+    list_display = ('id', 'corretora_id_id','robo_id_id','urlPrincipal','dataConf','loteWin','loteWdo','loteB3','gainDiario','lossDiario','lossWin','gainWin','lossWdo','gainWdo','lossB3','gainB3','created','updated')

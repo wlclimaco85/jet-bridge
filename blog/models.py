@@ -273,10 +273,10 @@ class OrdemZerada(models.Model):
 class Robos(models.Model):
     nome = models.CharField(max_length=100,blank=True, null=True)
     descricao = models.CharField(max_length=200,blank=True, null=True)
-    dataUltUp = models.DateTimeField(auto_now_add=True)
+    dataUltUp = models.DateTimeField(auto_now_add=True,blank=True, null=True)
     version = models.CharField(max_length=10,blank=True, null=True)
-    created = models.DateTimeField(auto_now_add=True)
-    updated = models.DateTimeField(auto_now=True)
+    created = models.DateTimeField(auto_now_add=True,blank=True, null=True)
+    updated = models.DateTimeField(auto_now=True,blank=True, null=True)
     status = models.CharField(max_length=1, blank=True, null=True, default='Z')
     class meta:
         ordering = ("-created",)
@@ -299,8 +299,8 @@ class Configuracoes(models.Model):
     gainWdo = models.FloatField(blank=True, null=True, default=0)
     lossB3 = models.FloatField(blank=True, null=True, default=0)
     gainB3 = models.FloatField(blank=True, null=True, default=0)
-    created = models.DateTimeField(auto_now_add=True)
-    updated = models.DateTimeField(auto_now=True)
+    created = models.DateTimeField(auto_now_add=True,blank=True, null=True)
+    updated = models.DateTimeField(auto_now=True,blank=True, null=True)
 
     class meta:
         ordering = ("-created",)

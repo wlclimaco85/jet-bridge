@@ -946,3 +946,73 @@ class CustonResponse007ViewSet(viewsets.ModelViewSet):
             for row in cursor.fetchall()
         ]
 
+class CustonResponse008ViewSet(viewsets.ModelViewSet):
+    
+    def dictfetchall(cursor):
+        "Return all rows from a cursor as a dict"
+        columns = [col[0] for col in cursor.description]
+        return [
+            dict(zip(columns, row))
+            for row in cursor.fetchall()
+        ]
+    
+    
+    from collections import namedtuple
+
+    serializer_class = Configuracoes
+    def dictfetchall3(cursor):
+        "Return all rows from a cursor as a dict"
+        columns = [col[0] for col in cursor.description]
+        return [
+            dict(zip(columns, row))
+            for row in cursor.fetchall()
+        ]
+
+    def get_queryset(self):
+        from collections import namedtuple
+       # cc = connection.cursor()
+
+        from collections import namedtuple
+        cc = connection.cursor()
+       # try:
+
+        corretora_id = self.request.query_params.get('corretora_id')
+        from collections import namedtuple
+        cc = connection.cursor()
+       # try:
+        quert = "SELECT VA.urlPrincipal , VA.dataConf, VA.loteWin, VA.loteWdo, VA.loteB3, VA.gainDiario, VA.lossDiario, VA.lossWin, VA.gainWin, VA.lossWdo, VA.gainWdo, VA.lossB3, VA.gainB3, VA.created, VA.updated, VA.corretora_id_id, VA.robo_id_id"
+        quert = quert + " FROM blog_configuracoes VA"
+        quert = quert + " WHERE VA.ID = (SELECT MAX(AE.ID) AS MAIOR_DATA FROM blog_configuracoes AE  WHERE CORRETORA_ID_ID = 1)"
+        if (corretora_id):
+            quert = quert + " AND VA.CORRETORA_ID_ID = "+corretora_id+" ";
+        
+        cc.execute(quert)
+        "Return all rows from a cursor as a dict"
+        columns = [col[0] for col in cc.description]
+        aa = [
+            dict(zip(columns, row))
+            for row in cc.fetchall()
+        ]
+        queryset = aa
+      #  finally:
+        cc.close()
+       # queryset = row #Model.objects.filter(location__distance_lte=(location, D(m=distance))).distance(location).order_by('distance')
+
+        return queryset
+
+    def dictfetchall4(cursor):
+        "Return all rows from a cursor as a dict"
+        columns = [col[0] for col in cursor.description]
+        return [
+            dict(zip(columns, row))
+            for row in cursor.fetchall()
+        ]
+    
+    def dictfetchall(cursor):
+        "Return all rows from a cursor as a dict"
+        columns = [col[0] for col in cursor.description]
+        return [
+            dict(zip(columns, row))
+            for row in cursor.fetchall()
+        ]
+
