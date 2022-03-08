@@ -914,7 +914,7 @@ class CustonResponse007ViewSet(viewsets.ModelViewSet):
         quert = "SELECT O.ID, O.CORRETORA_ID_ID AS CORRETORA_ID, O.TICKET,O.SIMBOLO, O.ORDEM_ID_ID AS QTDCONTRATOS, O.TICKET AS POSITIONID, O.STATUS, O.TIPO,O.ORDEM_ID_ID FROM BLOG_ORDERCOMPRAVENDA O "
         quert = quert + " WHERE O.ORDEM_ID_ID IN (SELECT ORDEM_ID_ID FROM BLOG_ORDEMZERADA Z WHERE Z.STATUS = 'Z') "
         if (corretora_id):
-            quert = quert + " AND O.CORRETORA_ID_ID = "+corretora_id+" ";
+            quert = quert + " AND O.CORRETORA_ID_ID = "+corretora_id+" "
         
         cc.execute(quert)
         "Return all rows from a cursor as a dict"
@@ -956,10 +956,9 @@ class CustonResponse008ViewSet(viewsets.ModelViewSet):
             for row in cursor.fetchall()
         ]
     
-    
     from collections import namedtuple
 
-    serializer_class = Configuracoes
+    serializer_class = CustonResponse008Serializer
     def dictfetchall3(cursor):
         "Return all rows from a cursor as a dict"
         columns = [col[0] for col in cursor.description]
@@ -980,11 +979,13 @@ class CustonResponse008ViewSet(viewsets.ModelViewSet):
         from collections import namedtuple
         cc = connection.cursor()
        # try:
-        quert = "SELECT VA.urlPrincipal , VA.dataConf, VA.loteWin, VA.loteWdo, VA.loteB3, VA.gainDiario, VA.lossDiario, VA.lossWin, VA.gainWin, VA.lossWdo, VA.gainWdo, VA.lossB3, VA.gainB3, VA.created, VA.updated, VA.corretora_id_id, VA.robo_id_id"
-        quert = quert + " FROM blog_configuracoes VA"
-        quert = quert + " WHERE VA.ID = (SELECT MAX(AE.ID) AS MAIOR_DATA FROM blog_configuracoes AE  WHERE CORRETORA_ID_ID = 1)"
+        quert = 'SELECT id, "urlPrincipal" , "dataConf", "loteWin", "loteWdo", "loteB3", "gainDiario", "lossDiario", "lossWin", "gainWin", "lossWdo", "gainWdo", "lossB3", "gainB3", created, updated, corretora_id_id, robo_id_id'
+        quert = quert + " FROM public.blog_configuracoes "
         if (corretora_id):
-            quert = quert + " AND VA.CORRETORA_ID_ID = "+corretora_id+" ";
+            quert = quert + " WHERE ID = (SELECT MAX(ID) AS MAIOR_DATA  FROM public.blog_configuracoes " 
+            quert = quert + 'WHERE CORRETORA_ID_ID = ' +  corretora_id
+            quert = quert + " ) "
+            quert = quert + " AND CORRETORA_ID_ID = " +  corretora_id
         
         cc.execute(quert)
         "Return all rows from a cursor as a dict"
@@ -1015,4 +1016,3 @@ class CustonResponse008ViewSet(viewsets.ModelViewSet):
             dict(zip(columns, row))
             for row in cursor.fetchall()
         ]
-

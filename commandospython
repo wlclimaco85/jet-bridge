@@ -17,6 +17,7 @@ python .\manage.py shell abrir sql
 pip install django-environ
 pip install whitenoise
 
+python .\manage.py sqlmigrate blog 0012_auto_20220307_1118
 
 
 //Comandos Flutter

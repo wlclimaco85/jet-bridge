@@ -290,7 +290,7 @@ class Configuracoes(models.Model):
     dataConf = models.DateTimeField(auto_now_add=True, blank=True, null=True)
     loteWin = models.FloatField(blank=True, null=True, default=0)
     loteWdo = models.FloatField(blank=True, null=True, default=0)
-    loteB3 = models.FloatField(max_length=1, blank=True, null=True, default='X')
+    loteB3 = models.FloatField(max_length=1, blank=True, null=True, default=0)
     gainDiario = models.FloatField(blank=True, null=True, default=0)
     lossDiario = models.FloatField(blank=True, null=True, default=0)
     lossWin = models.FloatField(blank=True, null=True, default=0)
@@ -306,4 +306,28 @@ class Configuracoes(models.Model):
         ordering = ("-created",)
     def __str__(self):
         return self.created
+
+class CustonResponse008(models.Model):
+    id = models.IntegerField(primary_key=True, db_column=False)
+    corretora_id_id = models.IntegerField(blank=True, null=True, db_column=False)
+    robo_id_id = models.IntegerField(blank=True, null=True, db_column=False)
+    urlPrincipal = models.CharField(max_length=255, blank=True, null=True, db_column=False)
+    dataConf = models.DateTimeField(auto_now_add=True, blank=True, null=True, db_column=False)
+    loteWin = models.FloatField(blank=True, null=True, default=0, db_column=False)
+    loteWdo = models.FloatField(blank=True, null=True, default=0, db_column=False)
+    loteB3 = models.FloatField(max_length=1, blank=True, null=True, default=0, db_column=False)
+    gainDiario = models.FloatField(blank=True, null=True, default=0, db_column=False)
+    lossDiario = models.FloatField(blank=True, null=True, default=0, db_column=False)
+    lossWin = models.FloatField(blank=True, null=True, default=0, db_column=False)
+    gainWin = models.FloatField(blank=True, null=True, default=0, db_column=False)
+    lossWdo = models.FloatField(blank=True, null=True, default=0, db_column=False)
+    gainWdo = models.FloatField(blank=True, null=True, default=0, db_column=False)
+    lossB3 = models.FloatField(blank=True, null=True, default=0, db_column=False)
+    gainB3 = models.FloatField(blank=True, null=True, default=0, db_column=False)
+    created = models.DateTimeField(auto_now_add=True,blank=True, null=True, db_column=False)
+    updated = models.DateTimeField(auto_now=True,blank=True, null=True, db_column=False)
+    class meta:
+        ordering = ("-corretora_id_id",)
+    def __str__(self):
+        return self.corretora_id_id
     

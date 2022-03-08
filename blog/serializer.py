@@ -94,4 +94,9 @@ class RobosSerializer(serializers.ModelSerializer):
 class ConfiguracoesSerializer(serializers.ModelSerializer):
     class Meta:
         model = Configuracoes
+        fields = ['id', 'corretora_id','robo_id','urlPrincipal','dataConf','loteWin','loteWdo','loteB3','gainDiario','lossDiario','lossWin','gainWin','lossWdo','gainWdo','lossB3','gainB3','created','updated']
+
+class CustonResponse008Serializer(serializers.ModelSerializer):
+    class Meta:
+        model = CustonResponse008
         fields = ['id', 'corretora_id_id','robo_id_id','urlPrincipal','dataConf','loteWin','loteWdo','loteB3','gainDiario','lossDiario','lossWin','gainWin','lossWdo','gainWdo','lossB3','gainB3','created','updated']
