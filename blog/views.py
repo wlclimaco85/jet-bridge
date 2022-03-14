@@ -979,7 +979,7 @@ class CustonResponse008ViewSet(viewsets.ModelViewSet):
         from collections import namedtuple
         cc = connection.cursor()
        # try:
-        quert = 'SELECT id, "urlPrincipal" , "dataConf", "loteWin", "loteWdo", "loteB3", "gainDiario", "lossDiario", "lossWin", "gainWin", "lossWdo", "gainWdo", "lossB3", "gainB3", created, updated, corretora_id_id, robo_id_id'
+        quert = 'SELECT id, "urlPrincipal" , "dataConf", "loteWin", "loteWdo", "loteB3", "gainDiario", "lossDiario", "lossWin", "gainWin", "lossWdo", "gainWdo", "seguranca","lossB3", "gainB3", created, updated, corretora_id_id, robo_id_id'
         quert = quert + " FROM public.blog_configuracoes "
         if (corretora_id):
             quert = quert + " WHERE ID = (SELECT MAX(ID) AS MAIOR_DATA  FROM public.blog_configuracoes " 

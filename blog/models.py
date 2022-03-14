@@ -293,6 +293,7 @@ class Configuracoes(models.Model):
     loteB3 = models.FloatField(max_length=1, blank=True, null=True, default=0)
     gainDiario = models.FloatField(blank=True, null=True, default=0)
     lossDiario = models.FloatField(blank=True, null=True, default=0)
+    seguranca = models.FloatField(blank=True, null=True, default=0)
     lossWin = models.FloatField(blank=True, null=True, default=0)
     gainWin = models.FloatField(blank=True, null=True, default=0)
     lossWdo = models.FloatField(blank=True, null=True, default=0)
@@ -324,6 +325,7 @@ class CustonResponse008(models.Model):
     gainWdo = models.FloatField(blank=True, null=True, default=0, db_column=False)
     lossB3 = models.FloatField(blank=True, null=True, default=0, db_column=False)
     gainB3 = models.FloatField(blank=True, null=True, default=0, db_column=False)
+    seguranca = models.FloatField(blank=True, null=True, default=0, db_column=False)
     created = models.DateTimeField(auto_now_add=True,blank=True, null=True, db_column=False)
     updated = models.DateTimeField(auto_now=True,blank=True, null=True, db_column=False)
     class meta:
