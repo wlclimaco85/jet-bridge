@@ -15,17 +15,17 @@ INSERT INTO blog_robos(id,nome, descricao, "dataUltUp", version, created, update
            (2,'ROBO003', 'Envio de ordens', '2022-03-07', 1006, '2022-03-07', '2022-03-07', 'A'),
            (3,'ROBO004', 'Monitoramento ordens', '2022-03-07', 1007, '2022-03-07', '2022-03-07', 'A');
 
-INSERT INTO blog_configuracoes("urlPrincipal", "dataConf", "loteWin", "loteWdo", "loteB3", "gainDiario", "lossDiario", "lossWin", "gainWin", "lossWdo", "gainWdo", "lossB3", "gainB3", created, updated, corretora_id_id, robo_id_id)
-	VALUES ('http://serene-beach-09990.herokuapp.com/', '2022-03-07', 1, 1, 10, 30.0, -60.0,600, 120, 5, 12, 10, 20, '2022-03-07', '2022-03-07', 1, 2),
-	('http://serene-beach-09990.herokuapp.com/', '2022-03-07', 1, 1, 10, 50.0, -100.0,600, 150, 5, 12, 10, 20, '2022-03-07', '2022-03-07', 2, 2),
-	('http://serene-beach-09990.herokuapp.com/', '2022-03-07', 1, 1, 10, 75.0, -150.0,600, 180, 5, 12, 10, 20, '2022-03-07', '2022-03-07', 3, 2),
-	('http://serene-beach-09990.herokuapp.com/', '2022-03-07', 1, 1, 10,100.0, -200.0,600, 200, 5, 12, 10, 20, '2022-03-07', '2022-03-07', 4, 2),
-	('http://serene-beach-09990.herokuapp.com/', '2022-03-07', 1, 1, 10, 25.0, -50.0,600, 225, 5, 12, 10, 20, '2022-03-07', '2022-03-07', 5, 2),
-	('http://serene-beach-09990.herokuapp.com/', '2022-03-07', 1, 1, 10, 15.0, -50.0,600, 250, 5, 12, 10, 20, '2022-03-07', '2022-03-07', 6, 2),
-	('http://serene-beach-09990.herokuapp.com/', '2022-03-07', 1, 1, 10, 10.0, -50.0,600, 300, 5, 12, 10, 20, '2022-03-07', '2022-03-07', 7, 2),
-	('http://serene-beach-09990.herokuapp.com/', '2022-03-07', 1, 1, 10, 125.0, -125.0,600, 350, 5, 12, 10, 20, '2022-03-07', '2022-03-07', 8, 2),
-	('http://serene-beach-09990.herokuapp.com/', '2022-03-07', 1, 1, 10, 150.0, -150.0,600, 400, 5, 12, 10, 20, '2022-03-07', '2022-03-07', 9, 2),
-	('http://serene-beach-09990.herokuapp.com/', '2022-03-07', 1, 1, 10, 175.0, -175.0,600, 500, 5, 12, 10, 20, '2022-03-07', '2022-03-07', 10, 2);
+INSERT INTO blog_configuracoes("urlPrincipal", "dataConf", "loteWin", "loteWdo", "loteB3", "gainDiario", "lossDiario", "lossWin", "gainWin", "lossWdo", "gainWdo", "lossB3", "gainB3", "seguranca","segurancaWDO", created, updated, corretora_id_id, robo_id_id)
+	VALUES ('http://serene-beach-09990.herokuapp.com/', '2022-03-07', 1, 1, 10, 30.0,  -60.0,600, 120,   5,  5, 10, 20,200,3, '2022-03-07', '2022-03-07', 1, 2),
+	('http://serene-beach-09990.herokuapp.com/'       , '2022-03-07', 1, 1, 10, 50.0,  -100.0,500, 150, 10, 10, 10, 20,100,5, '2022-03-07', '2022-03-07', 2, 2),
+	('http://serene-beach-09990.herokuapp.com/'       , '2022-03-07', 1, 1, 10, 75.0,  -150.0,700, 180,  7, 07, 10, 20,150,2, '2022-03-07', '2022-03-07', 3, 2),
+	('http://serene-beach-09990.herokuapp.com/'       , '2022-03-07', 1, 1, 10,100.0,  -200.0,800, 200, 12, 12, 10, 20,250,5, '2022-03-07', '2022-03-07', 4, 2),
+	('http://serene-beach-09990.herokuapp.com/'       , '2022-03-07', 1, 1, 10, 25.0,  -130.0,900, 225, 15, 15, 10, 20,150,5, '2022-03-07', '2022-03-07', 5, 2),
+	('http://serene-beach-09990.herokuapp.com/'       , '2022-03-07', 1, 1, 10, 15.0,  -50.0,555, 250,  20, 20, 10, 20,120,7, '2022-03-07', '2022-03-07', 6, 2),
+	('http://serene-beach-09990.herokuapp.com/'       , '2022-03-07', 1, 1, 10, 10.0,  -50.0,200, 300,   8, 08, 10, 20,50 ,4, '2022-03-07', '2022-03-07', 7, 2),
+	('http://serene-beach-09990.herokuapp.com/'       , '2022-03-07', 1, 1, 10, 125.0, -125.0,300, 350, 11, 11, 10, 20,150,5, '2022-03-07', '2022-03-07', 8, 2),
+	('http://serene-beach-09990.herokuapp.com/'       , '2022-03-07', 1, 1, 10, 150.0, -150.0,400, 400,  6, 12, 10, 20,200,3, '2022-03-07', '2022-03-07', 9, 2),
+	('http://serene-beach-09990.herokuapp.com/'       , '2022-03-07', 1, 1, 10, 175.0, -175.0,450, 500, 10, 20, 10, 20,225,5, '2022-03-07', '2022-03-07', 10, 2);
 	
 
 INSERT INTO blog_estrategias(
