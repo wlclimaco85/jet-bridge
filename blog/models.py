@@ -150,6 +150,7 @@ class OrderCompraVenda(models.Model):
     perfil = models.CharField(max_length=1, blank=True, null=True, default='C')
     tipo = models.CharField(max_length=1, blank=True, null=True , default='X')
     positionId = models.IntegerField(blank=True, null=True, default=0)
+    lucro = models.FloatField(blank=True, null=True, default=0)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
 

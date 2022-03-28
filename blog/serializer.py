@@ -49,7 +49,7 @@ class OrdemStatusSerializer(serializers.ModelSerializer):
 class OrderCompraVendaSerializer(serializers.ModelSerializer):
     class Meta:
         model = OrderCompraVenda
-        fields = ['id','corretora_id','ticket','ordem_id','simbolo','ambiente','nomeRobo','preco_compra','preco_venda','preco_loss','preco_gain','qtdContratos','data_compra','data_venda','status','tipo','created','updated']
+        fields = ['id','corretora_id','ticket','ordem_id','simbolo','ambiente','nomeRobo','preco_compra','preco_venda','preco_loss','preco_gain','qtdContratos','data_compra','data_venda','status','tipo','lucro','created','updated']
 
 class CustonResponse001Serializer(serializers.ModelSerializer):
     class Meta:

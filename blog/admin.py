@@ -44,7 +44,7 @@ class EstrategiasAdmin(admin.ModelAdmin):
 
 @admin.register(OrderCompraVenda)
 class OrderCompraVendaAdmin(admin.ModelAdmin):
-    list_display = ('id','ticket','ordem_id','simbolo','ambiente','nomeRobo','preco_compra','preco_venda','preco_loss','preco_gain','qtdContratos','data_compra','data_venda','status','tipo','created','updated')
+    list_display = ('id','ticket','ordem_id','simbolo','ambiente','nomeRobo','preco_compra','preco_venda','preco_loss','preco_gain','qtdContratos','data_compra','data_venda','status','tipo','lucro','created','updated')
 
 @admin.register(Robos)
 class RobosAdmin(admin.ModelAdmin):
