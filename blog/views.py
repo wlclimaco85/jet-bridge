@@ -21,7 +21,7 @@ class ConfiguracoesFilter(filters.FilterSet):
     class Meta:
         model = Configuracoes
         fields = (
-            'corretora_id','dataConf','robo_id'
+            'corretora_id','created'
         )  
 
 class ParceiroFilter(filters.FilterSet):

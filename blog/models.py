@@ -308,7 +308,7 @@ class Configuracoes(models.Model):
     class meta:
         ordering = ("-created",)
     def __str__(self):
-        return self.created
+        return self.id
 
 class CustonResponse008(models.Model):
     id = models.IntegerField(primary_key=True, db_column=False)
