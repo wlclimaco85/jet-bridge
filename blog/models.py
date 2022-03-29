@@ -230,6 +230,10 @@ class CustonResponse005(models.Model):
     ROBORECEBIMENTOORDEM = models.CharField(blank=True, null=True, db_column=False, max_length=1)
     ROBOUPDATEORDEM = models.CharField(blank=True, null=True, db_column=False, max_length=1)
     ordem_dia = models.IntegerField(blank=True, null=True, db_column=False)
+    lucro = models.FloatField(blank=True, null=True, db_column=False)
+    lucro1 = models.FloatField(blank=True, null=True, db_column=False)
+    lucro2 = models.FloatField(blank=True, null=True, db_column=False)
+    lucro3 = models.FloatField(blank=True, null=True, db_column=False)
     class meta:
         ordering = ("-ordem_erro",)
     def __str__(self):

@@ -69,7 +69,7 @@ class CustonResponse004Serializer(serializers.ModelSerializer):
 class CustonResponse005Serializer(serializers.ModelSerializer):
     class Meta:
         model = CustonResponse005
-        fields = ['id','usuario','ordem_abertas_hoje','ordem_abertas_total','order_state_started' ,'order_state_placed' ,'order_state_canceled' ,'order_state_partial' , 'order_state_filled' ,'order_state_rejected' ,'order_state_expired' ,'order_state_request_add' ,'order_state_request_modify','order_state_request_cancel' ,'ordem_erro', 'ROBOENVIOORDEM', 'ROBORECEBIMENTOORDEM','ROBOUPDATEORDEM','ordem_dia' ]
+        fields = ['id','usuario','ordem_abertas_hoje','ordem_abertas_total','order_state_started' ,'order_state_placed' ,'order_state_canceled' ,'ordem_erro', 'ordem_dia', 'lucro', 'lucro1','lucro2','lucro3']
 
 class CustonResponse006Serializer(serializers.ModelSerializer):
     class Meta:
