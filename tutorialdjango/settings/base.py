@@ -107,7 +107,7 @@ DATABASES = {
 
        'ENGINE': 'django.db.backends.postgresql_psycopg2',
 
-        'NAME': 'd5h53vg54au64p',
+       'NAME': 'd5h53vg54au64p',
 
         'USER': 'cezylfnncjryna',
 
@@ -118,6 +118,22 @@ DATABASES = {
       'PORT': '5432',
 
   }
+
+  #    'default': {
+
+   #    'ENGINE': 'django.db.backends.postgresql_psycopg2',
+
+  #      'NAME': 'postgres',
+
+  #      'USER': 'postgres',
+
+ #      'PASSWORD': 'admin',
+
+  #    'HOST': 'localhost',
+
+ #     'PORT': '5432',
+
+ # }
 }
 
 
