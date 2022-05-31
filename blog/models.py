@@ -203,6 +203,7 @@ class CustonResponse004(models.Model):
     periodo = models.IntegerField(blank=True, null=True, db_column=False)
     data = models.DateTimeField(blank=True, null=True, db_column=False)
     tipo = models.CharField(blank=True, null=True, max_length=1,db_column=False)
+    estr_id_id = models.IntegerField(blank=True, null=True, db_column=False)
     created = models.DateTimeField(blank=True, null=True, db_column=False)
     updated = models.DateTimeField(blank=True, null=True, db_column=False)
     class meta:
@@ -309,6 +310,24 @@ class Configuracoes(models.Model):
     created = models.DateTimeField(auto_now_add=True,blank=True, null=True)
     updated = models.DateTimeField(auto_now=True,blank=True, null=True)
 
+    class meta:
+        ordering = ("-created",)
+    def __str__(self):
+        return self.id
+
+class ConfiguracoesPorEst(models.Model):
+    corretora_id = models.ForeignKey(Corretora, on_delete=models.CASCADE, blank=True, null=True)
+    estr_id = models.ForeignKey(Estrategias, on_delete=models.CASCADE)
+    ativo = models.CharField(max_length=200,blank=True, null=True)
+    dataConf = models.DateTimeField(auto_now_add=True, blank=True, null=True)
+    lote = models.FloatField(blank=True, null=True, default=0)
+    gainDiario = models.FloatField(blank=True, null=True, default=0)
+    lossDiario = models.FloatField(blank=True, null=True, default=0)
+    seguranca = models.FloatField(blank=True, null=True, default=0)
+    loss = models.FloatField(blank=True, null=True, default=0)
+    gain = models.FloatField(blank=True, null=True, default=0)
+    created = models.DateTimeField(auto_now_add=True,blank=True, null=True)
+    updated = models.DateTimeField(auto_now=True,blank=True, null=True)
     class meta:
         ordering = ("-created",)
     def __str__(self):

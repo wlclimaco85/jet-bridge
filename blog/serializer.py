@@ -64,7 +64,7 @@ class CustonResponse002Serializer(serializers.ModelSerializer):
 class CustonResponse004Serializer(serializers.ModelSerializer):
     class Meta:
         model = CustonResponse004
-        fields = ['id','simbolo','valor','periodo','data','tipo','created','updated']
+        fields = ['id','simbolo','valor','periodo','data','tipo','estr_id_id','created','updated']
 
 class CustonResponse005Serializer(serializers.ModelSerializer):
     class Meta:
@@ -100,3 +100,8 @@ class CustonResponse008Serializer(serializers.ModelSerializer):
     class Meta:
         model = CustonResponse008
         fields = ['id', 'corretora_id_id','robo_id_id','urlPrincipal','dataConf','loteWin','seguranca','loteWdo','loteB3','gainDiario','lossDiario','lossWin','gainWin','lossWdo','gainWdo','lossB3','gainB3','seguranca','segurancaWDO','created','updated']
+
+class ConfiguracoesPorEstSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ConfiguracoesPorEst
+        fields = ['id', 'corretora_id_id','estr_id_id','ativo','dataConf','lote','gainDiario','lossDiario','seguranca','loss','gain','created','updated']

@@ -53,3 +53,7 @@ class RobosAdmin(admin.ModelAdmin):
 @admin.register(Configuracoes)
 class ConfiguracoesAdmin(admin.ModelAdmin):
     list_display = ('id', 'corretora_id_id','robo_id_id','urlPrincipal','dataConf','loteWin','loteWdo','loteB3','gainDiario','lossDiario','lossWin','gainWin','lossWdo','gainWdo','lossB3','gainB3','seguranca','segurancaWDO','created','updated')
+
+@admin.register(ConfiguracoesPorEst)
+class ConfiguracoesPorEstAdmin(admin.ModelAdmin):
+    list_display = ('id', 'corretora_id','estr_id','ativo','dataConf','lote','gainDiario','lossDiario','seguranca','loss','gain','created','updated')

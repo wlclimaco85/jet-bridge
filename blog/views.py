@@ -16,6 +16,12 @@ from django.http import Http404
 from datetime import datetime, timedelta
 from django.db import connection
 
+class ConfiguracoesPorEstFilter(filters.FilterSet):
+    class Meta:
+        model = ConfiguracoesPorEst
+        fields = (
+            'corretora_id','created','estr_id'
+        ) 
 
 class ConfiguracoesFilter(filters.FilterSet):
     class Meta:
@@ -257,6 +263,30 @@ class RobosViewSet(viewsets.ModelViewSet):
     def put(self, request, *args, **kwargs):
         return self.update(request, *args, **kwargs)
 
+class ConfiguracoesPorEstViewSet (viewsets.ModelViewSet):
+    queryset = ConfiguracoesPorEst.objects.all()
+    serializer_class = ConfiguracoesPorEstSerializer
+    filterset_class = ConfiguracoesPorEstFilter
+
+    @action(methods=['get'], detail=False)
+    def newest(self, request):
+        newest = self.get_queryset().order_by('created').last()
+        serializer = self.get_serializer_class()(newest)
+        return Response(serializer.data)
+
+    def destroy(self, request, *args, **kwargs):
+        try:
+            instance = self.get_object()
+            self.perform_destroy(instance)
+        except Http404:
+            pass
+        return Response(status=status.HTTP_204_NO_CONTENT)
+
+    def perform_destroy(self, instance):
+        instance.delete()
+
+    def put(self, request, *args, **kwargs):
+        return self.update(request, *args, **kwargs)
 
 class ConfiguracoesViewSet(viewsets.ModelViewSet):
     queryset = Configuracoes.objects.all()
@@ -686,7 +716,8 @@ class CustonResponse004ViewSet(viewsets.ModelViewSet):
        # try:
         futuredate = datetime.now()
         start_date =  datetime(futuredate.year, futuredate.month, futuredate.day, 0, 32, 11)
-        quert = "SELECT O.ID, O.SIMBOLO,O.VALOR,O.DATA,O.TIPO,O.CREATED,O.UPDATED,O.PERIODO FROM BLOG_ORDERENVIO O  "
+        quert = " SELECT O.ID, O.SIMBOLO,O.VALOR,O.DATA,O.TIPO,O.CREATED,O.UPDATED,O.PERIODO, R.estr_id_id FROM BLOG_ORDERENVIO O " 
+        quert = quert + "left join blog_requicaoest R on (O.ID = R.ORDEM_ID_ID) "
         quert = quert + "WHERE not exists (select * from blog_ORDEMSTATUS r where r.ordem_id_id = O.ID "
         if(corretora_id):
             quert = quert + "AND R.CORRETORA_ID_ID = "+corretora_id+")"
