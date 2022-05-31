@@ -20,7 +20,7 @@ class ConfiguracoesPorEstFilter(filters.FilterSet):
     class Meta:
         model = ConfiguracoesPorEst
         fields = (
-            'corretora_id','created','estr_id'
+            'corretora_id','created','estr_id','ativo'
         ) 
 
 class ConfiguracoesFilter(filters.FilterSet):
