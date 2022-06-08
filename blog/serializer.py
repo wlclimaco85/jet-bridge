@@ -29,7 +29,7 @@ class OrderEnvioSerializer(serializers.ModelSerializer):
 class CorretoraSerializer(serializers.ModelSerializer):
     class Meta:
         model = Corretora
-        fields = ['id','nome','usuario','senha','aplicativo','ambiente','saldo','created','updated','server','empresa','moeda','saldo','capitalLig','roboEnvioOrdem','roboRecebimentoOrdem','roboUpdateOrdem']
+        fields = ['id','nome','usuario','senha','aplicativo','ambiente','saldo','created','updated','server','empresa','moeda','capitalLig','roboEnvioOrdem','roboRecebimentoOrdem','roboUpdateOrdem']
 
 class EstrategiasSerializer(serializers.ModelSerializer):
     class Meta:
