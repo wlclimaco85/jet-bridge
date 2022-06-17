@@ -44,7 +44,7 @@ INSERT INTO blog_estrategias(
 		   (12, 'SCALPER NOVO', 'SCALPER NOVO', 'A', '2022-03-07', '2022-03-07', 'N'),
 		   (13, 'SCALPER 001', 'SCALPER 001', 'A', '2022-03-07', '2022-03-07', 'N'),
 		   (14, 'SCALPER 003', 'SCALPER 003', 'A', '2022-03-07', '2022-03-07', 'N'),
-           (15, 'INDICADOR WIN', 'INDICADOR WIN', 'A', '2022-03-07', '2022-03-07', 'N');
+           (15, 'INDICADOR WIN', 'INDICADOR WIN', 'A', '2022-03-07', '2022-03-07', 'N'),
 		   (16, 'INDICADOR SCALPER', 'INDICADOR SCALPER', 'A', '2022-03-07', '2022-03-07', 'N');
 	
 	
